@@ -1,0 +1,2 @@
+fichier de notes :
+les noms des widgets ( notamment leur nom de fichier) sont à utiliser pour leur variable déclarative

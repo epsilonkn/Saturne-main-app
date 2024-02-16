@@ -1,0 +1,1 @@
+,main_frame,main_label,valider_bt,cancel_bt,text_entry

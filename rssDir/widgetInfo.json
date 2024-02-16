@@ -1,0 +1,21 @@
+{
+    "frame" : {"name": "Frame","tkid" : "customtkinter.CTkFrame", "parameters": ["master", "width", "height", "corner_radius", "border_width", "bg_color", "fg_color", "border_color", "background_corner_colors"]}, 
+
+"bt" : {"name": "Bouton","tkid" : "customtkinter.CTkButton", "parameters": ["master", "width", "height", "corner_radius", "border_width", "border_spacing", "bg_color", "fg_color", "hover_color", 
+    "border_color", "text_color", "text_color_disabled", "text", "font", "textvariable", 
+    "image", "state", "hover", "command", "compound", "anchor"]}, 
+
+"label" :{"name": "Label","tkid" : "customtkinter.CTkLabel", "parameters": ["master", "width", "height", "corner_radius", "bg_color", "fg_color", "text_color", "text_color_disabled", "text", "font", 
+"image", "compound", "anchor", "wraplength"]}, 
+
+"entry" : {"name": "Entree","tkid" : "customtkinter.CTkEntry", "parameters": ["master", "width", "height", "corner_radius", "border_width", "bg_color", "fg_color", "border_color", "text_color", 
+"placeholder_text_color", "textvariable", "placeholder_text", "font", "state"]}, 
+
+"checkbox" : {"name": "Case a cocher", "tkid" : "customtkinter.CTkCheckBox", "parameters": ["master", "width", "height", "checkbox_width", "checkbox_height", "corner_radius", "border_width", "bg_color", 
+"fg_color", "hover_color", "border_color", "checkmark_color", "text_color", "text_color_disabled", "text", "font", "textvariable", "state", "hover", "command", "onvalue", 
+"offvalue", "variable"]}, 
+
+"optionmenu" : {"name": "Menu d'options","tkid" : "customtkinter.CTkOptionMenu", "parameters": ["master", "width", "height", "corner_radius", "border_width", "bg_color", "fg_color", "border_color", "button_color", 
+"button_hover_color", "dropdown_fg_color", "dropdown_hover_color", "dropdown_text_color", "text_color", "text_color_disabled", "font", "dropdown_font", "values", "state", 
+"hover", "variable", "command"]}
+}
