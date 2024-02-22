@@ -1,8 +1,8 @@
 #fichier créant le code en python
-import fileOpening as fileop
+from fileOpening import AnnexOperation
 from appattr import AppAttr
 
-class CodeGeneration(AppAttr):
+class CodeGeneration():
 
     str_sets = ["bg_color", "fg_color", "border_color", "text_color", "text_color_disabled",
                  "compound", "anchor", "hover_color", "checkmark_color", "state"
@@ -11,8 +11,8 @@ class CodeGeneration(AppAttr):
     print("codeGen loaded")
 
 
-    def mWinCode(cls, old_data, data, project_path):
-        code_dico = fileop.loadInfo(project_path, data = "prjtCodeList")
+    def mWinCode(cls, old_data, data):
+        code_dico = AnnexOperation.loadInfo(data = "prjtCodeList")
         try :
             if data["WinName"] != "" and data["WinName"] != old_data["WinName"] and f"window.title('{old_data["WinName"]}')\n" not in code_dico :
                 code_dico.insert(5, f"window.title('{data["WinName"]}')\n")
@@ -37,13 +37,13 @@ class CodeGeneration(AppAttr):
         return code_dico
     
     def createWidCode(cls, data : dict):
-        init_seq = data[0]["name"] + " = " + AppAttr.get(AppAttr,"widinfo")[data[0]["ID"]]["tkid"]+ "(" + data[0]["master"]
+        init_seq = data[0]["name"] + " = " + AppAttr.get("widinfo")[data[0]["ID"]]["tkid"]+ "(" + data[0]["master"]
         for keys, values in data[0].items() :
             if keys in ["name", "ID", "layout", "master"]:
                 pass
             elif keys == "text" :
                 init_seq += f", {keys} = '{values}'"
-            elif values != AppAttr.get(AppAttr,"widsets")[keys][0] and keys != "text": 
+            elif values != AppAttr.get("widsets")[keys][0] and keys != "text": 
                 if keys == "font" and values != "0":
                     font = "customtkinter.CTkFont("
                     for sets, val in data[1].items():
@@ -72,11 +72,10 @@ class CodeGeneration(AppAttr):
         return [init_seq, layout_seq, "\n"]
     
 
-    def mWidCode(cls, old_data : list, new_data : list, project_path):
-        code = fileop.loadInfo(project_path, data = "prjtCodeList")
+    def mWidCode(cls, old_data : list):
+        code = AnnexOperation.loadInfo(data = "prjtCodeList")
         old_widcode = cls.createWidCode(cls =CodeGeneration,  data = old_data)
-        new_widcode = cls.createWidCode(cls =CodeGeneration,  data = new_data)
-        print(old_data, "\n", new_widcode)
+        new_widcode = cls.createWidCode(cls =CodeGeneration,  data = AppAttr.get("widsetlist"))
         if old_widcode[0] != new_widcode[0] :
             if old_widcode[0] in code :
                 code.insert(code.index(old_widcode[0]), new_widcode[0])
@@ -94,13 +93,12 @@ class CodeGeneration(AppAttr):
         return code
 
 
-    def delWidCode(cls, widget, wid_id, project_path):
-        code = fileop.loadInfo(project_path, data = "prjtCodeList")
+    def delWidCode(cls):
+        code = AnnexOperation.loadInfo(data = "prjtCodeList")
         for lines in code :
             print(lines)
-            if f"{widget} = {AppAttr.get(AppAttr,"widinfo")[wid_id]["tkid"]}" in lines :
+            if f"{AppAttr.get("widget")} = {AppAttr.get("widinfo")[AppAttr.get("widget_id")]["tkid"]}" in lines :
                 del code[code.index(lines):code.index(lines)+3]
-                #del code[code.index(lines)]
             
         return code
 

@@ -21,12 +21,3 @@ text_entry.grid(padx = 10 ,pady = 5 ,column = 0 ,columnspan = 2 ,row = 1 ,sticky
 cancel_bt = customtkinter.CTkButton(main_frame, border_spacing = 2, text = 'annuler', font = customtkinter.CTkFont(family = 'Arial' ,size = 12 ,weight = 'bold' ))
 cancel_bt.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 2 ,sticky = 'W' )
 
-
-
-
-
-
-
-
-
-

@@ -1,10 +1,11 @@
-import fileOpening as fileop
 import json
 
 class AppAttr():
 
     _win_settings = {}
     _widsetlist = []
+    _widget_name_list = []
+    _project_wid_sets_list = []
     _widsets = None
     _widinfo = None
     _lang_dict = None
@@ -16,6 +17,7 @@ class AppAttr():
     print("AppAttr loaded")
 
 
+    @classmethod
     def _initConstAttr(cls):
         try : 
             with open("rssDir"+ "\\" +"widgetInfo.json", "r", encoding= 'utf8') as file:
@@ -39,7 +41,28 @@ class AppAttr():
             return "Error"
 
 
+    @classmethod
     def get(cls, attr):
+        """get _summary_
+
+        Parameters
+        ----------
+        attr : _type_
+            -project         : opened project name
+            -widget          : opened widget name
+            -widget_id       : opened widget's ID
+            -widsets         : widget's parameters list
+            -widinfo         : widget main info
+            -settings        : window settings
+            -widsetlist      : settings of the opened widget
+            -widnamelist     : list of the existing widgets in the project
+            -prjtwidsetslist : list of the widsets
+
+        Returns
+        -------
+        _type_
+            _description_
+        """
         match attr :
             case "project":
                 return cls._project
@@ -53,8 +76,15 @@ class AppAttr():
                 return cls._widinfo
             case "settings" :
                 return cls._win_settings
+            case "widsetlist" :
+                return cls._widsetlist
+            case "widnamelist" :
+                return cls._widget_name_list
+            case "prjtwidsetslist" :
+                return cls._project_wid_sets_list
 
 
+    @classmethod
     def config(cls, attr, val = None):
         match attr :
             case "project":
@@ -65,8 +95,12 @@ class AppAttr():
                 cls._widget_id = val
             case "settings" :
                 cls._win_settings = val
+            case "widsetlist" :
+                cls._widsetlist = val
+            case "widnamelist" :
+                cls._widget_name_list = val
+            case "prjtwidsetslist" :
+                cls._project_wid_sets_list = val
             case "const" :
-                cls._initConstAttr(AppAttr)
-
-    
-    
+                cls._initConstAttr()
+            

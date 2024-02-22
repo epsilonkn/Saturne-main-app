@@ -1,8 +1,6 @@
-from typing import Optional, Tuple, Union
 import customtkinter as ct
 from tkinter import messagebox
-import json
-import intermediateLayer as interl
+from intermediateLayer import *
 import tool_tip as tl
 from appattr import AppAttr
 
@@ -12,8 +10,7 @@ class ProjectApp(ct.CTkToplevel):
         super().__init__()
 
         self.newprojectname = None
-        settings = self.openWinSets()
-        self.tooltip = settings["tooltip"]
+        self.tooltip = AppAttr.get( "settings")["tooltip"]
 
         self.main_frame = ct.CTkFrame(self)
         self.side_frame = ct.CTkScrollableFrame(self.main_frame, height = 300, width = 180)
@@ -47,7 +44,7 @@ class ProjectApp(ct.CTkToplevel):
     def modifyFrame(self, project):
         self.clear("workFrame")
 
-        AppAttr.config(AppAttr,"project", project)
+        AppAttr.config("project", project)
         dico = self.loadPrjctInfo()
 
 
@@ -82,7 +79,7 @@ class ProjectApp(ct.CTkToplevel):
 
 
         self.prjt_name = ct.CTkEntry(self.upper_frame, width = 100)
-        self.prjt_name.insert(0, AppAttr.get(AppAttr,"project"))
+        self.prjt_name.insert(0, AppAttr.get("project"))
 
         self.win_name = ct.CTkEntry(self.upper_frame, width = 100)
         self.win_name.insert(0, dico['WinName'] if dico != None else "")
@@ -116,7 +113,7 @@ class ProjectApp(ct.CTkToplevel):
 
 
     def loadPrjctInfo(self):
-        dico =  interl.getPrjtSetRqst(AppAttr.get(AppAttr,"project"))
+        dico =  ProjectReq.getPrjtSetRqst()
         return dico
             
 
@@ -154,23 +151,22 @@ class ProjectApp(ct.CTkToplevel):
             dico["WinName"]     = name
             dico["height"]      = height
             dico["width"]       = width
-            if newname != AppAttr.get(AppAttr,"project") :
-                rename = interl.renameDirReq(AppAttr.get(AppAttr,"project"), newname)
+            if newname != AppAttr.get("project") :
+                rename = ProjectReq.renameDirReq(newname)
                 if rename == False :
                     messagebox.showerror("Erreur de sauvergade.", "Une erreur est survenue lors du renommage du projet.")
                     return 0
                 else :
-                    self.project_info.insert(self.project_info.index(AppAttr.get(AppAttr,"project")), newname)
-                    del self.project_info[self.project_info.index(AppAttr.get(AppAttr,"project"))]
+                    self.project_info.insert(self.project_info.index(AppAttr.get("project")), newname)
+                    del self.project_info[self.project_info.index(AppAttr.get("project"))]
                     converted_info = ",".join(self.project_info)
                     with open("rssDir\prjctNameSave.txt", "w", encoding= 'utf8') as file :
                         file.write(converted_info)
                     file.close()
-                    AppAttr.config(AppAttr,"project", newname )
+                    AppAttr.config("project", newname )
                     self.clear("sideFrame")
                     self.sideFrameUpdating()
-            interl.modidyPrjctRqst(AppAttr.get(AppAttr,"project"), dico)
-
+            ProjectReq.modidyPrjctRqst(dico)
 
     
     def openProjectInfo(self):
@@ -192,8 +188,11 @@ class ProjectApp(ct.CTkToplevel):
 
 
     def addProject(self):
-        self.newprojectname = self.entry.get()
-        self.project_info.append(self.newprojectname)
+        AppAttr.config( "project", self.entry.get())
+        if AppAttr.get( "project") != "" and type(AppAttr.get( "project")) == str :
+            ProjectReq.newPrjctRqst()
+        else : return
+        self.project_info.append(AppAttr.get( "project"))
         converted_info = ",".join(self.project_info)
 
         
@@ -201,24 +200,25 @@ class ProjectApp(ct.CTkToplevel):
             file.write(converted_info)
         file.close()
         
-        if self.newprojectname != None and type(self.newprojectname) == str :
-            interl.newPrjctRqst(self.newprojectname)
         
         self.clear("sideFrame")
         self.clear("workFrame")
         self.sideFrameUpdating()
-        self.modifyFrame(self.newprojectname)
+        self.modifyFrame(AppAttr.get( "project"))
 
 
     def delProject(self):
         try : 
-            if type(AppAttr.get(AppAttr,"project")) == str :
-                interl.rmproject()
-            del self.project_info[self.project_info.index(AppAttr.get(AppAttr,"project"))]
+            if type(AppAttr.get("project")) == str :
+                ProjectReq.rmproject()
+            
+            del self.project_info[self.project_info.index(AppAttr.get("project"))]
             converted_info = ",".join(self.project_info)
+            
             with open("rssDir\prjctNameSave.txt", "w", encoding= 'utf8') as file :
                 file.write(converted_info)
             file.close()
+            AppAttr.config("project", None)
             
             self.clear("workFrame")
             self.clear("sideFrame")
@@ -226,10 +226,6 @@ class ProjectApp(ct.CTkToplevel):
         except :
             messagebox.showerror("Suppression impossible", "Une erreur est survenue lors de la suppresion du projet.")
 
-
-    def openWinSets(self) :
-        with open("rssDir\wdSettings.json", "r", encoding= 'utf8') as file :
-            return json.load(file)
 
     def clear(self, choice):
         if choice == "sideFrame":
@@ -248,10 +244,10 @@ class ProjectApp(ct.CTkToplevel):
     def on_destroy(self) :
         self.wait_window()
         if self.validation != True :
-            AppAttr.config(AppAttr,"project", None)
-
-        
+            AppAttr.config("project", None)
+  
 
 if __name__ == "__main__" :
-    testapp = ProjectApp("new")
-    testapp.mainloop()
+    if AppAttr.config( "const") != "Error" :
+        testapp = ProjectApp("new")
+        testapp.mainloop()

@@ -34,7 +34,7 @@ class WidgetApp(ct.CTkToplevel):
 
 
     def choiceDone(self, choice):
-        AppAttr.config(AppAttr, "widget_id", choice)
+        AppAttr.config( "widget_id", choice)
         self.destroy()
 
 

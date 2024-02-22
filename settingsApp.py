@@ -12,7 +12,7 @@ class AppEditing(ct.CTkToplevel):
     def __init__(self):
         super().__init__()
         
-        self.parameters = deepcopy(AppAttr.get(AppAttr, "settings"))
+        self.parameters = deepcopy(AppAttr.get( "settings"))
         self.color = ct.StringVar()
         self.theme = ct.StringVar()
         self.theme_translation = {"eng-fra" : {"green" : "Vert", "dark-blue" : "Bleu foncé", "blue" : "Bleu", "system" : "Système", "dark" : "Sombre", "light" : "Clair"}, 
@@ -135,7 +135,7 @@ class AppEditing(ct.CTkToplevel):
             self.parameters["theme"]       = self.theme_translation["fra-eng"][self.theme.get()] 
             with open("rssDir\wdSettings.json", "w") as file:
                 json.dump(self.parameters, file)
-            AppAttr.config(AppAttr, "settings", self.parameters)
+            AppAttr.config( "settings", self.parameters)
             file.close()
             self.destroy()
         except :
@@ -148,7 +148,6 @@ class AppEditing(ct.CTkToplevel):
     
 
 if __name__ == "__main__" :
-    with open ("rssDir\wdSettings.json", "r") as file :
-        settings = json.load(file)
-    app = AppEditing(settings)
-    app.mainloop()
+    if AppAttr.config( "const") != "Error" :
+        app = AppEditing()
+        app.mainloop()
