@@ -24,7 +24,7 @@ class interface(ct.CTk):
         self.settings = None # défini si la fenêtre de paramètre est ouverte ou non
         self.widgetapp = None # défini si la fenêtre de widgets est ouverte ou non
         self.project_app = None # défini si la fenêtre des projets est ouverte ou non
-
+        self.protocol("WM_DELETE_WINDOW", self.on_quit)
 
         self.getSettings()
         self.createInterface()
@@ -46,7 +46,7 @@ class interface(ct.CTk):
         self.code_frame = ct.CTkFrame(self, width=self.width*(45/100), height=self.height, border_color = "#000000", border_width= 2)
         self.edit_frame = ct.CTkScrollableFrame(self, width=self.width*(35/100), height=self.height*(90/100))
         self.actionbtframe = ct.CTkFrame(self, height = self.height*(10/100), width = self.width*(55/100))
-        self.main_item_frame = ct.CTkScrollableFrame(self, height = self.height*(85/100), width = self.width*(18/100), label_text = "widgets :")
+        self.main_item_frame = ct.CTkScrollableFrame(self, height = self.height*(85/100), width = self.width*(18/100), label_text = AppAttr.get("langdict")["menuwid"][self.language])
 
 
         self.code_frame.grid(row =0, rowspan =2, column = 0, ipadx = 15, sticky = "N")
@@ -67,28 +67,27 @@ class interface(ct.CTk):
         self.widget_menu = tk.Menu(self.menubar, tearoff = False)
         self.code_menu = tk.Menu(self.menubar, tearoff = False)
         
-        self.fichier.add_command(label = "Ouvrir un projet", command = lambda x = AppAttr.get("project") : self.openProjectApp(x))
-        self.fichier.add_command(label = "Nouveau projet", command = lambda x = "new" : self.openProjectApp(x))
+        self.fichier.add_command(label = AppAttr.get("langdict")["menufile1"][self.language], command = lambda x = AppAttr.get("project") : self.openProjectApp(x))
+        self.fichier.add_command(label = AppAttr.get("langdict")["menufile2"][self.language], command = lambda x = "new" : self.openProjectApp(x))
+        self.fichier.add_command(label = AppAttr.get("langdict")["menufile3"][self.language], command= lambda : self.savefile())
         self.fichier.add_separator()
-        self.fichier.add_command(label='Vérifier les fichiers', command = lambda : self.verifyFiles())
-        
-        self.application.add_command(label= "Recharger", command = lambda x = "all" : self.clear(x))
-        self.application.add_command(label= "Paramètres", command = lambda : self.openParameters())
-        self.application.add_command(label='Quitter', command = lambda : self.on_quit())
+        self.fichier.add_command(label=AppAttr.get("langdict")["menufile4"][self.language], command = lambda : self.verifyFiles())
 
-        self.widget_menu.add_command(label='Ajouter un widget', command = lambda : self.widgetAdding())
-        self.widget_menu.add_command(label='Supprimer', command = lambda : self.delWid())
-        self.widget_menu.add_command(label='Modifier', command = lambda : self.modifyWid())
-        
+        self.application.add_command(label= AppAttr.get("langdict")["menuapp1"][self.language], command = lambda x = "all" : self.clear(x))
+        self.application.add_command(label= AppAttr.get("langdict")["menuapp2"][self.language], command = lambda : self.openParameters())
+        self.application.add_command(label=AppAttr.get("langdict")["menuapp3"][self.language], command = lambda : self.on_quit())
 
-        self.code_menu.add_command(label='Copier le code', command = lambda : self.copyCode())
-        self.code_menu.add_command(label='Aperçu', command = lambda : self.openPreview())
+        self.widget_menu.add_command(label=AppAttr.get("langdict")["menuwid1"][self.language], command = lambda : self.widgetAdding())
+        self.widget_menu.add_command(label=AppAttr.get("langdict")["menuwid2"][self.language], command = lambda : self.delWid())
+        self.widget_menu.add_command(label=AppAttr.get("langdict")["menuwid3"][self.language], command = lambda : self.modifyWid())
 
+        self.code_menu.add_command(label=AppAttr.get("langdict")["menucode1"][self.language], command = lambda : self.copyCode())
+        self.code_menu.add_command(label=AppAttr.get("langdict")["menucode2"][self.language], command = lambda : self.openPreview())
 
-        self.menubar.add_cascade(label = "fichiers", menu = self.fichier)
-        self.menubar.add_cascade(label = "Application", menu = self.application)
-        self.menubar.add_cascade(label = "Widget", menu = self.widget_menu)
-        self.menubar.add_cascade(label = "Code", menu = self.code_menu)
+        self.menubar.add_cascade(label = AppAttr.get("langdict")["menufile"][self.language], menu = self.fichier)
+        self.menubar.add_cascade(label = AppAttr.get("langdict")["menuapp"][self.language], menu = self.application)
+        self.menubar.add_cascade(label = AppAttr.get("langdict")["menuwid"][self.language], menu = self.widget_menu)
+        self.menubar.add_cascade(label = AppAttr.get("langdict")["menucode"][self.language], menu = self.code_menu)
         
 
         #-------------------- création des widgets et des boutons d'actions --------------------
@@ -100,24 +99,24 @@ class interface(ct.CTk):
         self.code_output.configure(yscrollcommand=self.code_scrollbar.set)
 
         self.copy_bt = ct.CTkButton(self.code_frame, width= self.width*(10/100), height= self.height*(4/100),
-                                    text = "Copier", font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, 
+                                    text = AppAttr.get("langdict")["menucode1"][self.language], font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, 
                                     command = lambda : self.copyCode())
         self.preview_bt = ct.CTkButton(self.code_frame, width= self.width*(10/100), height= self.height*(4/100),
-                                       text = "Aperçu", font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, 
+                                       text = AppAttr.get("langdict")["menucode2"][self.language], font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, 
                                        command = lambda : self.openPreview())
 
 
         self.parameter_button = ct.CTkButton(self.actionbtframe, width= self.width*(10/100), height= self.height*(6/100),
-                                             text = "paramètres", font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.openParameters())
+                                             text = AppAttr.get("langdict")["menuapp2"][self.language], font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.openParameters())
         tl.CreateToolTip(self.parameter_button, text = "Bouton d'ouverture de la fenêtre de paramètres.") if self.showtooltip == "Oui" else None
 
         self.modify_button = ct.CTkButton(self.actionbtframe,  width= self.width*(10/100), height= self.height*(6/100),
-                                             text = "modifier", font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.modifyWid())
+                                             text = AppAttr.get("langdict")["menuwid3"][self.language], font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.modifyWid())
         tl.CreateToolTip(self.modify_button, text = "Bouton de modification des paramètres d'un widget.") if self.showtooltip == "Oui" else None
         self.modify_button.configure(state = "disabled") if AppAttr.get("widget") == None else None
 
         self.delete_button = ct.CTkButton(self.actionbtframe,  width= self.width*(10/100), height= self.height*(6/100),
-                                             text = "supprimer", font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.delWid())
+                                             text = AppAttr.get("langdict")["menuwid2"][self.language], font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.delWid())
         tl.CreateToolTip(self.delete_button, text = "Bouton de suppression d'un widget.") if self.showtooltip == "Oui" else None
         self.delete_button.configure(state = "disabled") if AppAttr.get("widget") == None else None
 
@@ -150,11 +149,14 @@ class interface(ct.CTk):
         """
         self.clear('itemFrame')
         
-        self.add_button = ct.CTkButton(self.main_item_frame, width= self.width*(16/100), height= 40, text = "Ajouter",border_width= 2, border_color = "#FFFFFF",
-                                       font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command= lambda : self.widgetAdding())
+        self.add_button = ct.CTkButton(self.main_item_frame, width= self.width*(16/100), height= 40, text = AppAttr.get("langdict")["menuwid1"][self.language],
+                                       border_width= 2, border_color = "#FFFFFF",font=ct.CTkFont(size=15, weight="bold"), 
+                                       corner_radius= 10, command= lambda : self.widgetAdding())
+       
         tl.CreateToolTip(self.add_button, text = "Bouton d'ajout de widgets dans le projet.") if self.showtooltip == "Oui" else None
         self.add_button.configure(state = "disabled") if AppAttr.get("project") == None else None
         self.add_button.grid(padx = 5, pady = 5)
+
         for widgets in AppAttr.get("widnamelist") :
             if widgets != "" :
                 w_bt = ct.CTkButton(self.main_item_frame, text = widgets, width= self.width*(16/100), height= self.height*(6/100), 
@@ -184,8 +186,8 @@ class interface(ct.CTk):
         loading = True
         try :
             #on récupère les données du widget, les données associées à chaque paramètre, et les paramètre par défaut du widget
-            AppAttr.config("widsetlist",self.fLoadFunct("getWidSet"))
-            AppAttr.config("widget_id",AppAttr.get("widsetlist")[0]["ID"])
+            AppAttr.config("widsetlist", AppAttr.get("prjtwidsetslist")[AppAttr.get("widget")])
+            AppAttr.config("widget_id",AppAttr.get("widsetlist")[3]["ID"])
         except any as error :
             print(error)
             loading = False
@@ -199,12 +201,12 @@ class interface(ct.CTk):
                 self.settings_frame.grid( row = 1, column = 0, sticky = 'w')
 
                 #on crée le label titre, ainsi que l'entrée permettant de renseigner le nom du widget
-                self.overal_lbl = ct.CTkLabel(self.edit_frame, text = AppAttr.get("widsetlist")[0]["name"],font=ct.CTkFont(size=25, weight="bold"))
+                self.overal_lbl = ct.CTkLabel(self.edit_frame, text = AppAttr.get("widsetlist")[3]["name"],font=ct.CTkFont(size=25, weight="bold"))
 
                 self.widnamelbl = ct.CTkLabel(self.settings_frame, text = "Nom du widget :",font=ct.CTkFont(size=15, weight="bold"))
                 self.widname = ct.CTkEntry(self.settings_frame, width= 150, height = 40,font=ct.CTkFont(weight="bold"))
                 tl.CreateToolTip(self.widnamelbl, "Nom du widget, attention ce nom sera aussi utilisé comme nom de variable dans le code.") if self.showtooltip == "Oui" else None
-                self.widname.insert(0, AppAttr.get("widsetlist")[0]["name"])
+                self.widname.insert(0, AppAttr.get("widsetlist")[3]["name"])
 
                 self.overal_lbl.grid(column = 0, row = 0 , pady = 15, sticky = 'w')
                 self.widnamelbl.grid(row = 1, column = 0, columnspan = 2 if self.column_num == 3 else 1, 
@@ -222,18 +224,30 @@ class interface(ct.CTk):
                         
                         if parameter in ["font", "hover", "image"]:
                             entry = ct.CTkSwitch(self.settings_frame, text = "", onvalue="1", offvalue="0", switch_width= 48,switch_height= 18)
-                            entry.select() if AppAttr.get("widsetlist")[0][parameter] == '1' else None
-                            if parameter == "font" : self.fontvar= ct.StringVar(value = AppAttr.get("widsetlist")[0][parameter])
-                            entry.configure(command = lambda : self.showFontFrame(), variable = self.fontvar) if parameter == "font" else None
+                            if parameter in AppAttr.get("widsetlist")[0].keys() :
+                                entry.select() if AppAttr.get("widsetlist")[0][parameter] == '1' else None
+                            if parameter == "font" : 
+                                print("passed")
+                                try : self.fontvar= ct.StringVar(value = AppAttr.get("widsetlist")[0][parameter])
+                                except : self.fontvar = ct.StringVar(value = "0")
+                                entry.configure(command = lambda : self.showFontFrame(), variable = self.fontvar)
                             
-                        
+                        elif parameter == "master" :
+                            entry = ct.CTkEntry(self.settings_frame, width = 100,font=ct.CTkFont(weight="bold"))
+                            entry.insert(0, AppAttr.get("widsetlist")[3]["master"])
                         elif parameter in ["state", "anchor", "compound", "justify"]:
                             entry = ct.CTkOptionMenu(self.settings_frame, values = AppAttr.get("widsets")[parameter][3])  
-                            entry.set(AppAttr.get("widsetlist")[0][parameter])  
-                        
+                            if parameter in AppAttr.get("widsetlist")[0].keys():
+                                entry.set(AppAttr.get("widsetlist")[0][parameter])
+                            else :   
+                                entry.set(AppAttr.get("widsets")[parameter][0])
+
                         else :
                             entry = ct.CTkEntry(self.settings_frame, width = 100,font=ct.CTkFont(weight="bold"))
-                            entry.insert(0, AppAttr.get("widsetlist")[0][parameter])
+                            if parameter in AppAttr.get("widsetlist")[0].keys():
+                                entry.insert(0, AppAttr.get("widsetlist")[0][parameter])
+                            else : 
+                                entry.insert(0, AppAttr.get("widsets")[parameter][0])
                         self.actual_sets.append((entry, parameter))
                         tl.CreateToolTip(lbl, AppAttr.get("widsets")[parameter][2]) if self.showtooltip == "Oui" else None
                         
@@ -248,7 +262,7 @@ class interface(ct.CTk):
                 self.layoutlbl = ct.CTkLabel(self.settings_frame, text = "affichage du widget : ", font=ct.CTkFont(size=15, weight="bold") )
                 self.layout = ct.CTkSegmentedButton(self.settings_frame, font=ct.CTkFont(size=15, weight="bold"), values = ["pack", "grid"], 
                                                      command = self.showLayoutFrame)
-                self.layout.set(AppAttr.get("widsetlist")[0]["layout"]) if AppAttr.get("widsetlist")[0]["layout"] != None else None
+                self.layout.set(AppAttr.get("widsetlist")[3]["layout"]) if AppAttr.get("widsetlist")[3]["layout"] != None else None
                 self.layoutlbl.grid(row = row +1, column = 0)
                 self.layout.grid(row = row+1, column = 1)
                 
@@ -514,29 +528,6 @@ class interface(ct.CTk):
                 pass
 
 
-    def fLoadFunct(self, event : str, *dico : list) -> Union[None, dict]:
-        """fLoadFunct _summary_
-        fonction d'envoi de requêtes de chargement/envoi de données
-
-        Parameters
-        ----------
-        event : str
-            décrit l'action à réaliser :
-            -getWidSet : récupère les données d'un widget ciblé            ( fichier "[nom du projet]\[nom du widget].json")
-            -modifyWidSet : modifie les données d'un widget ciblé          ( fichier "[nom du projet]\[nom du widget].json")
-        Returns
-        -------
-        Union[None, dict]
-            renvoie None dans la plupart des cas, 
-            renvoie un dictionnaire si l'appel est lié à l'obtention des données d'un widget
-        """
-        if event == "getWidSet" :
-            return WidgetReq.getWidSetReq()
-        if event == 'modifyWidSet' :
-            AppAttr.config("widsetlist", dico[0])
-            WidgetReq.modifyWidSetReq()
-
-
     def modifyWid(self) -> None:
         """modifyWid 
         fonction de modification des paramètres d'un widget,
@@ -546,11 +537,27 @@ class interface(ct.CTk):
             layout_dico = {}
             font_dico = {}
             dico = {}
-            dico['ID'] = AppAttr.get("widget_id")
+            id_card_dict = {}
+
+            #creation of the ID card of the widget
+            if ControlReq.tryWN(self.widname.get()) == True :
+                id_card_dict["name"] = self.widname.get()
+            else :
+                messagebox.showerror("Erreur d'entrée", "Le nom du widget est invalide.")
+                id_card_dict["name"] = AppAttr.get("widget")
+                #on supprime le nom invalide dans l'entrée associée et le remplace par le précédent nom
+                self.widname.delete()
+                self.widname.insert(0, AppAttr.get("widget"))
+            id_card_dict["ID"] = AppAttr.get("widget_id")
+            id_card_dict["slaves"] = True if AppAttr.get("widsetlist")[3]["slaves"] == True else False
+            id_card_dict["layout"] = None
+            id_card_dict["initcode"] = AppAttr.get("widsetlist")[3]["initcode"]
+            id_card_dict["layoutcode"] = AppAttr.get("widsetlist")[3]["layoutcode"]
+
 
             #vérification du layout et ajout dans le dictionnaire correspondant
             if self.layout.get() != "" :
-                dico["layout"] = self.layout.get()
+                id_card_dict["layout"] = self.layout.get()
                 for element in self.layout_list :
                     if element[1].get() != element[2] :
                         if element[0] in ("column", "columnspan", "row", "rowspan") or (element[0] in ("ipadx", "ipady", "padx", "pady") and element[1].get() != "0") :
@@ -562,17 +569,8 @@ class interface(ct.CTk):
                             layout_dico[element[0]] = element[1].get()
             else :
                 messagebox.showerror("Erreur d'entrée", "Aucune méthode de layout sélectionné")
-                return 0
-            #on vérifie que le nom de widget donné respecte les règles de typage pour une variable
-            if ControlReq.tryWN(self.widname.get()) == True :
-                dico["name"] = self.widname.get() 
-            else :
-                messagebox.showerror("Erreur d'entrée", "Le nom du widget est invalide.")
-                dico["name"] = AppAttr.get("widget")
-                #on supprime le nom invalide dans l'entrée associée et le remplace par le précédent nom
-                self.widname.delete()
-                self.widname.insert(0, AppAttr.get("widget"))
-            
+                return 
+
             for element in self.actual_sets :
                 
                 if element[1] in ["width", "height"] :
@@ -616,15 +614,36 @@ class interface(ct.CTk):
                 elif element[1] == "hover" :
                     if element[0].get() == "0" : dico[element[1]] = "False"
                     else : dico[element[1]] = "True"
+
                 elif element [1] == "image" :
                     pass
-                
+
+                elif element [1] == "master":
+                    if element[0].get() in AppAttr.get("widnamelist") or element[0].get().strip() == "window" :
+                        id_card_dict["master"] = element[0].get()
+                        if element[0].get() in AppAttr.get("widnamelist") : 
+                            subdict = AppAttr.get("prjtwidsetslist")
+                            subdict[element[0].get()][3]["slaves"] += 1
+                            AppAttr.config("prjtwidsetslist", subdict)
+                    else : 
+                        messagebox.showerror("Erreur d'entrée","Widget parent désigné invalide.")
+                        return
+                elif element[1] == "text" :
+                    text = element[0].get().replace("\'", "\\\'")
+                    dico[element[1]] = text
                 else : 
-                    dico[element[1]] = element[0].get()
-            
-            self.fLoadFunct("modifyWidSet", [dico, font_dico, layout_dico])
-            self.overal_lbl.configure(text = dico["name"])
-            AppAttr.config("widget", dico["name"])
+                    if element[0].get() != AppAttr.get("widsets")[element[1]][0] :
+                        dico[element[1]] = element[0].get()
+
+            print(AppAttr.get("prjtwidsetslist"),"\n\n",(dico, font_dico, layout_dico, id_card_dict))
+            main_dict = AppAttr.get("prjtwidsetslist")
+            del main_dict[AppAttr.get("widget")]
+            main_dict[id_card_dict["name"]] = (dico, font_dico, layout_dico, id_card_dict)
+            AppAttr.config("prjtwidsetslist", main_dict)
+            AppAttr.config("widget", id_card_dict["name"])
+            WidgetReq.modifyWidSetReq()
+            AppAttr.config("saved", False)
+            self.overal_lbl.configure(text = id_card_dict["name"])
             self.sideWidgetsUptdating()
             self.codeFrame()
         else : 
@@ -645,8 +664,10 @@ class interface(ct.CTk):
             self.attributes('-fullscreen', False)
             self.width   = AppAttr.get( "settings")["width"]
             self.height  = AppAttr.get( "settings")["height"]
+        
         self.showtooltip = AppAttr.get( "settings")["tooltip"]
         self.detail_lvl  = AppAttr.get( "settings")["detail"]
+        self.language = AppAttr.get("settings")["int_language"]
 
         ct.set_default_color_theme(AppAttr.get( "settings")["color"])
         ct.set_appearance_mode(AppAttr.get( "settings")["theme"])
@@ -682,23 +703,47 @@ class interface(ct.CTk):
         Fonction de suppression d'un widget.
         """
         if AppAttr.get("widget") != None :
-            WidgetReq.delWidReq()
-            self.clear("sets")
-            self.actual_sets = []
-            AppAttr.config("widget", None)
-            AppAttr.config("widget_id", None)
-            self.sideWidgetsUptdating()
-            self.configActionBt()
-            self.codeFrame()
+            if AppAttr.get("widsetlist")[3]["slaves"] == 0 :
+                WidgetReq.delWidReq()
+                self.clear("sets")
+                self.actual_sets = []
+                
+                data = AppAttr.get("prjtwidsetslist")
+                del data[AppAttr.get("widget")]
+                if AppAttr.get("widsetlist")[3]["master"] != "window":
+                    data[AppAttr.get("widsetlist")[3]["master"]][3]["slaves"] -= 1
+                AppAttr.config("prjtwidsetslist", data)
+
+                data = AppAttr.get("widnamelist")
+                del data[data.index(AppAttr.get("widget"))]
+                AppAttr.config("widnamelist", data)
+
+                AppAttr.config("widget", None)
+                AppAttr.config("widget_id", None)
+                AppAttr.config("saved", False)
+                AppAttr.config("widsetlist", [])
+                self.sideWidgetsUptdating()
+                self.configActionBt()
+                self.codeFrame()
+            else : 
+                messagebox.showerror("Suppression impossible", "Suppression impossible, ce widget possède des widgets enfants")
         else :
-            messagebox.showinfo("Utilisation impossible", "Suppression impossible, aucun widget n'est ouvert.")
+            messagebox.showinfo("Suppression impossible", "Suppression impossible, aucun widget n'est ouvert.")
 
     
     def on_quit(self) -> None:
         """on_quit 
         Détruit la fenêtre lorsque le bouton "Quitter" du menu est pressé
         """
-        self.destroy()
+        print(AppAttr.get("saved"))
+        if AppAttr.get("saved") == False :
+            quitting = messagebox.askokcancel("Modification non enregistrée", "Voulez-vous quitter l'application ?\ntoute modfication non enregistrée sera perdue")
+            if quitting == True :
+                self.destroy()
+            else :
+                pass
+        else : 
+            self.destroy()
 
 
     def copyCode(self):
@@ -714,6 +759,11 @@ class interface(ct.CTk):
         CodeReq.shutdownExe()
 
 
+    def savefile(self):
+        ProjectReq.saveModifReq()
+        AppAttr.config("saved", True)
+
+
 #-------------------- fonctions de création de fenêtres enfant --------------------
     
 
@@ -726,6 +776,7 @@ class interface(ct.CTk):
             self.project_app = ProjectApp(reason)
             self.project_app.grab_set()
             self.project_app.on_destroy()
+            self.project_app = None
             if AppAttr.get("project") != None :
                 self.title(f"Saturne : {AppAttr.get("project")}")
                 ProjectReq.initProjectAttrReq()
@@ -761,11 +812,11 @@ class interface(ct.CTk):
             self.widgetapp.grab_set()
             self.widgetapp = self.widgetapp.on_destroy()
             if AppAttr.get( "widget_id") != None :
-                WidgetReq.createWidSetFileReq(AppAttr.get( "widget_id"))
+                WidgetReq.createWidSetFileReq()
                 data = AppAttr.get("widnamelist")[::]
                 data.append(AppAttr.get("widget"))
                 AppAttr.config("widnamelist", data)
-
+                AppAttr.config("saved", False)
                 self.sideWidgetsUptdating()
         else :
             print("fenêtre d'ajout d'un widget déjà ouverte")

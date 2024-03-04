@@ -1,2 +1,7 @@
 fichier de notes :
-les noms des widgets ( notamment leur nom de fichier) sont à utiliser pour leur variable déclarative
+faire la gestion des master :
+-modifier le nom d'un master dans l'init de ses enfants
+ajouter les logs 
+ajouter le cache
+faire l'admin
+faire les mini fenêtres de paramètres

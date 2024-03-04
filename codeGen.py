@@ -11,93 +11,149 @@ class CodeGeneration():
     print("codeGen loaded")
 
 
+    @classmethod
     def mWinCode(cls, old_data, data):
         code_dico = AnnexOperation.loadInfo(data = "prjtCodeList")
         try :
-            if data["WinName"] != "" and data["WinName"] != old_data["WinName"] and f"window.title('{old_data["WinName"]}')\n" not in code_dico :
+            if data["WinName"] != "" and data["WinName"] != old_data["WinName"] :
+                if f"window.title('{old_data["WinName"]}')\n" in code_dico :
+                    del code_dico[code_dico.index(f"window.title('{old_data["WinName"]}')\n")]
                 code_dico.insert(5, f"window.title('{data["WinName"]}')\n")
-            elif f"window.title('{old_data["WinName"]}')\n" in code_dico :
-                del code_dico[code_dico.index(f"window.title('{old_data["WinName"]}')\n")]
-                code_dico.insert(5, f"window.title('{data["WinName"]}')\n")
-        except :
-            pass
+        except any as error:
+            print(error)
         
         try :
             if data["height"] == "" or data["width"] == "" :
-                if f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" :
+                if f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" in code_dico :
                     del code_dico[code_dico.index(f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n")]
+            
             elif data["height"] > 50 and data["width"] > 50 and f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" not in code_dico :
                 code_dico.insert(6, f"window.geometry('{data["height"]}x{data["width"]}')\n")
+            
             elif f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" in code_dico :
                 del code_dico[code_dico.index(f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n")]
                 code_dico.insert(6, f"window.geometry('{data["height"]}x{data["width"]}')\n")
-        except :
-            pass
+        except any as error:
+            print(error)
         code_dico.insert(7, "\n")
         return code_dico
     
-    def createWidCode(cls, data : dict):
-        init_seq = data[0]["name"] + " = " + AppAttr.get("widinfo")[data[0]["ID"]]["tkid"]+ "(" + data[0]["master"]
+
+    @classmethod
+    def createWidCode(cls, data : dict) -> list:
+        """createWidCode 
+        create the code of the widget
+
+        Parameters
+        ----------
+        data : dict
+            list of the widget's settings
+
+        Returns
+        -------
+        list
+            list containing the code widget's initialisation ( element 0 )
+            and the widget's layout ( element 1 ) 
+        """
+        init_seq = data[3]["name"] + " = " + AppAttr.get("widinfo")[data[3]["ID"]]["tkid"]+ "(" + data[3]["master"]
+        init_seq += cls._cPC(data)
+        init_seq += ')\n'
+        layout_seq = cls._cLC(data)
+        return [init_seq, layout_seq, "\n"]
+    
+
+    @classmethod
+    def _cPC(cls, data) -> str :
+        sets_seq = ""
         for keys, values in data[0].items() :
             if keys in ["name", "ID", "layout", "master"]:
                 pass
             elif keys == "text" :
-                init_seq += f", {keys} = '{values}'"
+                sets_seq += f", {keys} = '{values}'"
             elif values != AppAttr.get("widsets")[keys][0] and keys != "text": 
                 if keys == "font" and values != "0":
-                    font = "customtkinter.CTkFont("
-                    for sets, val in data[1].items():
-                        if sets in ["family", "weight", "slant"] :
-                            font += f"{sets} = '{val}' ,"
-                        else :
-                            font += f"{sets} = {val} ,"
-                    font = font[0:-1] + ")"
-                    init_seq += f", {keys} = {font}"
+                    sets_seq += f", {keys} = {cls._cFC(data)}"
                 
                 elif keys != "font" :
                     if keys in cls.str_sets:
-                        init_seq += f", {keys} = '{values}'"
+                        sets_seq += f", {keys} = '{values}'"
                     elif keys == "values" :
-                        init_seq += f", {keys} = [{values}]"
+                        sets_seq += f", {keys} = [{values}]"
                     else :
-                        init_seq += f", {keys} = {values}"
-        init_seq += ')\n'
-        layout_seq = f"{data[0]["name"]}.{data[0]["layout"]}("
-        for sets, val in data[2].items():
-            if sets in ["sticky", "side", "fill", "anchor"]:
-                layout_seq += f"{sets} = '{val}' ,"
-            else : 
-                layout_seq += f"{sets} = {val} ,"
-        layout_seq = layout_seq[0:-1] + ")\n" if len(data[2].keys()) > 0 else layout_seq + ")\n"
-        return [init_seq, layout_seq, "\n"]
+                        sets_seq += f", {keys} = {values}"
+        return sets_seq
     
 
-    def mWidCode(cls, old_data : list):
+    @classmethod
+    def _cFC(cls, data)-> str:
+        font = "customtkinter.CTkFont("
+        for sets, val in data[1].items():
+            if sets in ["family", "weight", "slant"] :
+                font += f"{sets} = '{val}' ,"
+            else :
+                font += f"{sets} = {val} ,"
+        font = font[0:-1] + ")"
+        return font
+
+
+    @classmethod
+    def _cLC(cls, data) -> str :
+        """cLC : create Layout Code
+        create the code of the widget's layout
+
+        Returns
+        -------
+        list
+            _description_
+        """
+        print(data[3]["layout"])
+        if data[3]["layout"] != None :
+            layout_seq = f"{data[3]["name"]}.{data[3]["layout"]}("
+            for sets, val in data[2].items():
+                if sets in ["sticky", "side", "fill", "anchor"]:
+                    layout_seq += f"{sets} = '{val}' ,"
+                else : 
+                    layout_seq += f"{sets} = {val} ,"
+            layout_seq = layout_seq[0:-1] + ")\n" if len(data[2].keys()) > 0 else layout_seq + ")\n"
+            return layout_seq
+        else : return f"{data[3]["name"]}.pack()"
+
+
+    @classmethod
+    def mWidCode(cls):
         code = AnnexOperation.loadInfo(data = "prjtCodeList")
-        old_widcode = cls.createWidCode(cls =CodeGeneration,  data = old_data)
-        new_widcode = cls.createWidCode(cls =CodeGeneration,  data = AppAttr.get("widsetlist"))
-        if old_widcode[0] != new_widcode[0] :
-            if old_widcode[0] in code :
-                code.insert(code.index(old_widcode[0]), new_widcode[0])
-                del code[code.index(old_widcode[0])]
-            else :
-                code.append(new_widcode[0])
-        
-        if old_widcode[1] != new_widcode[1] :
-            if old_widcode[1] in code :
-                code.insert(code.index(old_widcode[1]), new_widcode[1])
-                del code[code.index(old_widcode[1])]
-            else :
-                code.append(new_widcode[1])
+        old_widcode = AppAttr.get("widsetlist")
+        print(AppAttr.get("widget"))
+        new_widcode = cls.createWidCode(data = AppAttr.get("prjtwidsetslist")[AppAttr.get("widget")])
+        if old_widcode[3]["initcode"] in code :
+            code.insert(code.index(old_widcode[3]["initcode"]), new_widcode[0])
+            del code[code.index(old_widcode[3]["initcode"])]
+        else :
+            code.append(new_widcode[0])
+
+        if old_widcode[3]["layoutcode"] in code :
+            code.insert(code.index(old_widcode[3]["layoutcode"]), new_widcode[1])
+            del code[code.index(old_widcode[3]["layoutcode"])]
+        else :
+            code.append(new_widcode[1])
+        data = AppAttr.get("prjtwidsetslist")
+        subdata = data[AppAttr.get("widget")]
+        subdata[3]["initcode"] = new_widcode[0]
+        subdata[3]["layoutcode"] = new_widcode[1]
+        data[AppAttr.get("widget")] = subdata
+        AppAttr.config("prjtwidsetslist", data)
+        AppAttr.config("widsetlist", data[AppAttr.get("widget")])
+
+
         code.append(new_widcode[2])
+
         return code
 
 
     def delWidCode(cls):
         code = AnnexOperation.loadInfo(data = "prjtCodeList")
         for lines in code :
-            print(lines)
-            if f"{AppAttr.get("widget")} = {AppAttr.get("widinfo")[AppAttr.get("widget_id")]["tkid"]}" in lines :
+            if AppAttr.get("widsetlist")[3]["initcode"] in lines :
                 del code[code.index(lines):code.index(lines)+3]
             
         return code

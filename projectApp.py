@@ -11,6 +11,9 @@ class ProjectApp(ct.CTkToplevel):
 
         self.newprojectname = None
         self.tooltip = AppAttr.get( "settings")["tooltip"]
+        self.language = AppAttr.get("settings")["int_language"]
+
+        self.char_weight = "normal" if AppAttr.get("settings")["language"] == "日本語" else "bold"
 
         self.main_frame = ct.CTkFrame(self)
         self.side_frame = ct.CTkScrollableFrame(self.main_frame, height = 300, width = 180)
@@ -32,9 +35,9 @@ class ProjectApp(ct.CTkToplevel):
     def workFrameCreation(self):
         self.clear("workFrame")
         
-        self.project_label = ct.CTkLabel(self.work_frame, text = "Créer un nouveau projet", width=600)
+        self.project_label = ct.CTkLabel(self.work_frame, text = AppAttr.get("langdict")["project_label"][self.language], width=600)
         self.entry = ct.CTkEntry(self.work_frame, width=200)
-        self.content_valid_bt = ct.CTkButton(self.work_frame, text = "valider", height = 30, width=200, command = lambda : self.addProject())
+        self.content_valid_bt = ct.CTkButton(self.work_frame, text = AppAttr.get("langdict")["content_valid_bt"][self.language], height = 30, width=200, command = lambda : self.addProject())
 
         self.project_label.grid(row = 0, column = 0, pady = 15)
         self.entry.grid(row = 1, column = 0, pady = 15)
@@ -60,13 +63,13 @@ class ProjectApp(ct.CTkToplevel):
 
         #-------------------- création des labels -------------------- 
 
-        self.prjt_name_lbl = ct.CTkLabel(self.upper_frame, text = "nom du projet : ", font=ct.CTkFont(size=15, weight="bold"))
+        self.prjt_name_lbl = ct.CTkLabel(self.upper_frame, text = AppAttr.get("langdict")["prjt_name_lbl"][self.language], font=ct.CTkFont(size=15, weight=self.char_weight))
         tl.CreateToolTip(self.prjt_name_lbl , "Nom du projet") if self.tooltip == "Oui" else None
-        self.win_name_lbl = ct.CTkLabel(self.upper_frame, text = "nom de l'interface :", font=ct.CTkFont(size=15, weight="bold"))
+        self.win_name_lbl = ct.CTkLabel(self.upper_frame, text = AppAttr.get("langdict")["win_name_lbl"][self.language], font=ct.CTkFont(size=15, weight=self.char_weight))
         tl.CreateToolTip(self.win_name_lbl , "Nom de la fenêtre") if self.tooltip == "Oui" else None
-        self.win_height_lbl = ct.CTkLabel(self.upper_frame, text = "hauteur :", font=ct.CTkFont(size=15, weight="bold"))
+        self.win_height_lbl = ct.CTkLabel(self.upper_frame, text = AppAttr.get("langdict")["win_height_lbl"][self.language], font=ct.CTkFont(size=15, weight=self.char_weight))
         tl.CreateToolTip(self.win_height_lbl , "Hauteur de la fenêtre,\n200 par défaut") if self.tooltip == "Oui" else None
-        self.win_width_lbl = ct.CTkLabel(self.upper_frame, text = "largeur :", font=ct.CTkFont(size=15, weight="bold"))
+        self.win_width_lbl = ct.CTkLabel(self.upper_frame, text = AppAttr.get("langdict")["win_width_lbl"][self.language], font=ct.CTkFont(size=15, weight=self.char_weight))
         tl.CreateToolTip(self.win_width_lbl , "Largeur de la fenêtre,\n200 par défaut.") if self.tooltip == "Oui" else None
 
         self.prjt_name_lbl.grid(row = 0, column =0, padx = 10, pady = 10)
@@ -100,9 +103,9 @@ class ProjectApp(ct.CTkToplevel):
         #-------------------- création des boutons -------------------- 
 
 
-        self.del_bt = ct.CTkButton(self.lower_frame, text = "supprimer", height = 30, width=130, command = lambda : self.delProject())
-        self.modify_bt = ct.CTkButton(self.lower_frame, text = "modifier", height = 30, width=130, command = lambda :self.modifyInfo())
-        self.open_bt = ct.CTkButton(self.lower_frame, text = "ouvrir", height = 30, width=130, command = lambda : self.validate())
+        self.del_bt = ct.CTkButton(self.lower_frame, text = AppAttr.get("langdict")["menuwid2"][self.language], height = 30, width=130, command = lambda : self.delProject())
+        self.modify_bt = ct.CTkButton(self.lower_frame, text = AppAttr.get("langdict")["menuwid3"][self.language], height = 30, width=130, command = lambda :self.modifyInfo())
+        self.open_bt = ct.CTkButton(self.lower_frame, text = AppAttr.get("langdict")["open_bt"][self.language], height = 30, width=130, command = lambda : self.validate())
 
         self.del_bt.grid(row = 0, column = 0, padx = 10, pady = 10)
         self.modify_bt.grid(row = 0, column = 1, padx = 10, pady = 10)
@@ -178,7 +181,7 @@ class ProjectApp(ct.CTkToplevel):
     def sideFrameUpdating(self):
         self.openProjectInfo()
         self.clear("sideFrame")
-        self.add_button = ct.CTkButton(self.side_frame, text = 'ajouter un projet', width = 160, height = 30, command = lambda : self.workFrameCreation())
+        self.add_button = ct.CTkButton(self.side_frame, text = AppAttr.get("langdict")["add_project_label"][self.language], width = 160, height = 30, command = lambda : self.workFrameCreation())
         self.add_button.grid(padx = 10, pady = 5)
 
         for projects in self.project_info:

@@ -5,10 +5,13 @@ class AppAttr():
     _win_settings = {}
     _widsetlist = []
     _widget_name_list = []
-    _project_wid_sets_list = []
+    _project_wid_sets_list = {}
     _widsets = None
     _widinfo = None
     _lang_dict = None
+    _saved = True
+    _code = None
+    _lang_choice = None
     
     _project = None
     _widget = None
@@ -57,6 +60,8 @@ class AppAttr():
             -widsetlist      : settings of the opened widget
             -widnamelist     : list of the existing widgets in the project
             -prjtwidsetslist : list of the widsets
+            -language        : language chose
+            -langdict        : dictionnary of the different languages
 
         Returns
         -------
@@ -82,6 +87,12 @@ class AppAttr():
                 return cls._widget_name_list
             case "prjtwidsetslist" :
                 return cls._project_wid_sets_list
+            case "saved" :
+                return cls._saved
+            case "language" :
+                return cls._lang_choice
+            case "langdict" :
+                return cls._lang_dict
 
 
     @classmethod
@@ -101,6 +112,10 @@ class AppAttr():
                 cls._widget_name_list = val
             case "prjtwidsetslist" :
                 cls._project_wid_sets_list = val
+            case "saved" :
+                cls._saved = val
+            case "language" :
+                cls._lang_choice = val
             case "const" :
                 cls._initConstAttr()
             

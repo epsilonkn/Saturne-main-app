@@ -62,17 +62,6 @@ class FileOperation():
             except : 
                 os.rmdir()
 
-    @staticmethod
-    def rmFile(path : str) -> None:
-        """rmFile 
-        Fonction de suppression d'un fichier
-
-        Parameters
-        ----------
-        path : str
-            chemin d'accès du fichier à supprimer
-        """
-        os.remove(path)
 
     @staticmethod
     def createPath(target : str) -> str:
@@ -95,6 +84,14 @@ class FileOperation():
 class ProjectOperation():
     """ProjectOperation 
     class which contain the function dedicated to operations on projects files and directories
+
+    contains methods : 
+    -dirCreation : create a new directory for a project
+    -renameDir   : change the name of a directory ( called when the project's name is changed )
+    -rmDirectory : remove a directory ( called when a project is deleted )
+    -mPS         : modiy the project's settings
+    -wCode       : write the code in the dedicated file
+    -save        : save the modification of the widgets in the dedicated file
     """
 
     @staticmethod
@@ -116,6 +113,8 @@ class ProjectOperation():
                 file.write("import customtkinter\n\nwindow = customtkinter.CTk()\n\n")
             with open(path +"\\"+ 'widNmeList.txt', "w") as file :
                 pass
+            with open(path +"\\"+ 'widgetlist.json', "w") as file :
+                json.dump({}, file)
         except OSError as error :
             print("error raised : ", error)
 
@@ -190,91 +189,25 @@ class ProjectOperation():
             file.writelines(code)
         file.close()
 
-
-class WidgetFileOperation(): 
-    """WidgetFileOperation 
-    class which contains the functions dedicated to widgets files operations.
-    """
-
-
     @staticmethod
-    def rmWid() -> None : 
-        """rmWid : remove Widget
-        Fonction de suppression d'un widget
-
-        Parameters
-        ----------
-        widget : str
-            widget à supprimer
-        project : str
-            projet parent du widget
-        """
-        path = FileOperation.createPath( AppAttr.get("project"))
-        os.remove(path + "\\" + AppAttr.get("widget") + ".json")
+    def save():
+        path = FileOperation.createPath(AppAttr.get("project"))
+        with open (path + "\\" + "widgetlist.json", 'w', encoding="utf8") as file :
+            json.dump(AppAttr.get("prjtwidsetslist"), file)
+        widnamelist = ""
+        for keys in AppAttr.get("prjtwidsetslist").keys():
+            widnamelist +="," + keys 
+        with open(path +"\\"+ 'widNmeList.txt', "w", encoding= 'utf8') as file :
+            file.write(widnamelist)
         
-        data = AppAttr.get("widnamelist")
-        del data[data.index(AppAttr.get("widget"))]
-        AppAttr.config("widnamelist", data)
-        data = ",".join(data)
-        with open(path + "\widNmeList.txt", 'w', encoding= 'utf8') as file :
-            file.write(data)     
-
-
-    @staticmethod
-    def cWSF(path : str, name : str, settings : dict) -> None:
-        """cWSF : create Widget Settings File
-        crée le fichier correspondant au widget créé par l'utilisateur
-        modifie la liste des widgets dans le fichier "widNmeList.txt"
-
-        Parameters
-        ----------
-        path : str
-            chemin d'accès au fichier du widget
-        name : str
-            nom du widget
-        settings : dict
-            dictionnaire des paramètres du widget
-        """
-        with open(path + "\\" + name + ".json", "w", encoding= 'utf8') as file :
-            json.dump(settings, file)
-        with open(path + "\widNmeList.txt", 'a', encoding= 'utf8') as file :
-            file.write("," + name)
-        
-
-    @staticmethod
-    def mWS(path : str) -> None :
-        """mWS : modify Widget Settings
-        à la manière de la fonction "cWSF", crée un fichier contenant les nouvelles données du widget
-        si le nom du widget a été changé, la fonction modifie aussi le nom dans le fichier "widNmeList.txt"
-
-        Parameters
-        ----------
-        path : str
-            chemin d'accès du dossier du projet parent
-        newname : str
-            nouveau nom du widget
-        oldname : str
-            ancien nom du widget 
-        note : newname et oldname peut être identiques
-        settings : dict
-            dictionnaires contenant les paramètres du widget
-        """
-        with open(path + "\\" + AppAttr.get( "widsetlist")[0]["name"] + ".json", "w", encoding= 'utf8') as file :
-            json.dump(AppAttr.get( "widsetlist"), file)
-        
-        if AppAttr.get( "widsetlist")[0]["name"] != AppAttr.get("widget") :
-            data = AppAttr.get("widnamelist")
-            data.insert(data.index(AppAttr.get("widget")), AppAttr.get( "widsetlist")[0]["name"])
-            del data[data.index(AppAttr.get("widget"))]
-            AppAttr.config("widnamelist", data)
-            data = ','.join(data)
-            with open(path + "\widNmeList.txt", 'w', encoding= 'utf8') as file :
-                file.write(data)
-            
 
 class AnnexOperation():
     """AnnexOperation 
     class which contains the methods of this module that not refer to any of the 3 others classes
+
+    contains : 
+    -verifyApp
+    -loadInfo
     """
 
 
@@ -386,15 +319,9 @@ class AnnexOperation():
                 return None
         if data == "initwidsetlist":
             try:
-                for element in AppAttr.get("widnamelist"):
-                    print(element)
-                    if element != "": 
-                        path = FileOperation.createPath(AppAttr.get("project")) + "\\" + element + ".json"
-                        with open(path, "r", encoding="utf8") as file :
-                            data = json.load(file)
-                            liste = AppAttr.get("prjtwidsetslist")
-                            liste.append(data)
-                            AppAttr.config("prjtwidsetslist", liste)
+                path = FileOperation.createPath(AppAttr.get("project")) + "\\" + "widgetlist.json"
+                with open(path, "r", encoding="utf8") as file :
+                    AppAttr.config("prjtwidsetslist", json.load(file))
             except any as error :
                 print(error)
                 return None

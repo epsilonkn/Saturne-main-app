@@ -51,7 +51,7 @@ class ProjectReq():
             dictionnaire des paramètres du projet
         """
         old_data = AnnexOperation.loadInfo(data = "prjctInfo")
-        code = CodeGeneration.mWinCode(CodeGeneration, old_data, dico)
+        code = CodeGeneration.mWinCode(old_data, dico)
         ProjectOperation.wCode(code)
         FileModification.modifyPrjtInfo(dico)
 
@@ -83,7 +83,11 @@ class ProjectReq():
     def initProjectAttrReq():
         AppAttr.config("widnamelist", AnnexOperation.loadInfo(data = "widNameList"))
         AnnexOperation.loadInfo(data = "initwidsetlist")
-        print(AppAttr.get("prjtwidsetslist"))
+
+
+    @staticmethod
+    def saveModifReq():
+        ProjectOperation.save()
 
 
 class WidgetReq():
@@ -139,7 +143,7 @@ class WidgetReq():
 
 
     @staticmethod
-    def createWidSetFileReq(newwidget : str) -> str:
+    def createWidSetFileReq() -> str:
         """createWidSetFileReq 
         Envoie une requête de création d'un fichier pour un widget
 
@@ -155,29 +159,16 @@ class WidgetReq():
         str
             retourne le nouveau nom du widget
         """
-        FileModification.cNWSF(newwidget)
+        FileModification.cNWSF()
 
 
     @staticmethod
     def modifyWidSetReq() -> None:
         """modifyWidSetReq 
         Envoie une requête de modification des paramètres d'un widget créé par l'utilisateur
-
-        Parameters
-        ----------
-        widget : str
-            identifiant du widget ( label, button etc)
-        widname : str
-            nom du widget ( donné par l'utilisateur/ par le programme)
-        dico : list
-            dictionnaire des paramètres du widget
-        project : str
-            nom du projet parent du widget
         """
-        old_data = AnnexOperation.loadInfo(data = "actualwidSet")
-        code = CodeGeneration.mWidCode(CodeGeneration, old_data)
+        code = CodeGeneration.mWidCode()
         ProjectOperation.wCode(code)
-        FileModification.uWS()
 
 
     @staticmethod
@@ -194,7 +185,6 @@ class WidgetReq():
         """
         code = CodeGeneration.delWidCode(CodeGeneration)
         ProjectOperation.wCode(code)
-        WidgetFileOperation.rmWid()
 
 
 class CodeReq():
