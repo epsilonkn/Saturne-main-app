@@ -1,0 +1,405 @@
+
+------------ file verify start ------------
+
+ addWidgetTool.py : ok
+ Admin.py : ok
+ appattr.py : ok
+ codeGen.py : ok
+ fileManagemt.py : ok
+ fileOpening.py : ok
+ intermediateLayer.py : ok
+ logsFile.py : ok
+ main.py : ok
+ projectApp.py : ok
+ settingsApp.py : ok
+ tool_tip.py : ok
+ topLevelWin.py : ok
+ widgetApp.py : ok
+
+ directory rssDir : ok
+ ressources Files :
+ logs.txt : ok
+ languageDict.json : ok
+ tk_family.txt : ok
+ tk_family.txt : ok
+ wdSettings.json : ok
+ widgetInfo.json : ok
+ widgetRss.json : ok
+ widParaInfo.json : ok
+ notes.txt is not accessible
+project projet exemple : ok
+ files :
+ code.py : ok
+ prjtset.json : ok
+ widgetlist.json : ok
+ widNmeList.txt : ok
+project test : ok
+ files :
+ code.py : ok
+ prjtset.json : ok
+ widgetlist.json : ok
+ widNmeList.txt : ok
+project test2 : ok
+ files :
+ code.py : ok
+ prjtset.json : ok
+ widgetlist.json : ok
+ widNmeList.txt : ok
+ __pycache__ is not accessible
+
+------------ file verify end ------------
+
+2024-03-09 16:04:03.801299 | New session started
+
+
+ 2024-03-09 16:04:06.815165 | new project : projet exemple
+
+ 2024-03-09 16:04:07.817417 | widget name list : ['', 'frame', 'button', 'entry', 'label']
+
+ session closed
+
+2024-03-09 16:19:15.504118 | New session started
+
+
+ 2024-03-09 16:19:22.747113 | new project : helpbox
+
+ 2024-03-09 16:19:22.795274 | new project : helpbox
+
+ 2024-03-09 16:19:24.305530 | widget name list : ['']
+
+ 2024-03-09 16:19:29.763629 | actual widget's ID : label
+
+ 2024-03-09 16:19:29.780820 | actual widget opened : label1
+
+ 2024-03-09 16:19:29.780820 | actual cache : [('<add>', 'label1')]
+
+ 2024-03-09 16:19:29.780820 | widget name list : ['', 'label1']
+
+ 2024-03-09 16:19:35.242803 | actual widget opened : label2
+
+ 2024-03-09 16:19:35.242803 | actual cache : [('<add>', 'label1'), ('<add>', 'label2')]
+
+ 2024-03-09 16:19:35.242803 | widget name list : ['', 'label1', 'label2']
+
+ 2024-03-09 16:19:36.371038 | actual widget opened : label2
+
+ 2024-03-09 16:19:36.371553 | widget settings list : [{}, {}, {}, {'name': 'label2', 'ID': 'label', 'master': 'window', 'slaves': 0, 'layout': None, 'initcode': 'label2 = customtkinter.CTkLabel(window)\n', 'layoutcode': 'label2.
+ pack()'}]
+
+ 2024-03-09 16:19:36.371553 | actual widget's ID : label
+
+ 2024-03-09 16:19:37.748533 | actual cache : [('<add>', 'label1'), ('<add>', 'label2'), ('<delete>', 'label2', [{}, {}, {}, {'name': 'label2', 'ID': 'label', 'master': 'window', 'slaves': 0, 'layout': None, 'initcode': '
+ label2 = customtkinter.CTkLabel(window)\n', 'layoutcode': 'label2.pack()'}], ['', 'label1', 'label2'], ['import customtkinter\n', '\n', 'window = customtkinter.CTk()\n', '\n
+ '])]
+
+ 2024-03-09 16:19:37.780435 | widget name list : ['', 'label1']
+
+ 2024-03-09 16:19:37.780435 | actual widget opened : None
+
+ 2024-03-09 16:19:37.780435 | actual widget's ID : None
+
+ 2024-03-09 16:19:37.780435 | widget settings list : []
+
+ 2024-03-09 16:19:38.900460 | actual widget opened : label1
+
+ 2024-03-09 16:19:38.915900 | widget settings list : [{}, {}, {}, {'name': 'label1', 'ID': 'label', 'master': 'window', 'slaves': 0, 'layout': None, 'initcode': 'label1 = customtkinter.CTkLabel(window)\n', 'layoutcode': 'label1.
+ pack()'}]
+
+ 2024-03-09 16:19:38.915900 | actual widget's ID : label
+
+ 2024-03-09 16:20:05.276088 | actual widget opened : ('label1', 'label')
+
+ 2024-03-09 16:20:05.276088 | widget name list : ['', 'label']
+
+ 2024-03-09 16:20:05.276088 | actual cache : [('<add>', 'label1'), ('<add>', 'label2'), ('<delete>', 'label2', [{}, {}, {}, {'name': 'label2', 'ID': 'label', 'master': 'window', 'slaves': 0, 'layout': None, 'initcode': '
+ label2 = customtkinter.CTkLabel(window)\n', 'layoutcode': 'label2.pack()'}], ['', 'label1', 'label2'], ['import customtkinter\n', '\n', 'window = customtkinter.CTk()\n', '\n
+ ']), ('<modify>', 'label1', 'label', [{}, {}, {}, {'name': 'label1', 'ID': 'label', 'master': 'window', 'slaves': 0, 'layout': None, 'initcode': 'label1 = customtkinter.CTkL
+ abel(window)\n', 'layoutcode': 'label1.pack()'}], ['import customtkinter\n', '\n', 'window = customtkinter.CTk()\n', '\n'])]
+
+ 2024-03-09 16:20:05.276088 | widget settings list : ({'width': 200, 'height': 200, 'text': 'clickez ici', 'font': '0'}, {}, {'padx': 10, 'pady': 10}, {'name': 'label', 'ID': 'label', 'slaves': False, 'layout': 'pack', 'initcode
+ ': "label = customtkinter.CTkLabel(window, text = 'clickez ici')\n", 'layoutcode': 'label.pack(padx = 10 ,pady = 10 )\n', 'master': 'window'})
+
+ 2024-03-09 16:20:05.276088 | actual widget opened : label
+
+ session closed
+
+2024-03-09 16:28:15.008295
+ An error Occured | level : Critical
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 18, in personalize
+    text_frame = ct.CTkFrame(self)
+                 ^^^^^^^^^^^^^^^^^
+  File "C:\Users\ywan\AppData\Local\Programs\Python\Python313\Lib\site-packages\customtkinter\windows\widgets\ctk_frame.py", line 33, in __init__
+    super().__init__(master=master, bg_color=bg_color, width=width, height=height, **kwargs)
+  File "C:\Users\ywan\AppData\Local\Programs\Python\Python313\Lib\site-packages\customtkinter\windows\widgets\core_widget_classes\ctk_base_class.py", line 41, in __init__
+    tkinter.Frame.__init__(self, master=master, width=width, height=height, **pop_from_dict_by_set(kwargs, self._valid_tk_frame_attributes))
+  File "C:\Users\ywan\AppData\Local\Programs\Python\Python313\Lib\tkinter\__init__.py", line 3270, in __init__
+    Widget.__init__(self, master, 'frame', cnf, {}, extra)
+  File "C:\Users\ywan\AppData\Local\Programs\Python\Python313\Lib\tkinter\__init__.py", line 2702, in __init__
+    self._setup(master, cnf)
+  File "C:\Users\ywan\AppData\Local\Programs\Python\Python313\Lib\tkinter\__init__.py", line 2671, in _setup
+    self.tk = master.tk
+              ^^^^^^^^^
+AttributeError: 'HelpBox' object has no attribute 'tk'
+
+2024-03-09 16:36:17.050170
+ An error Occured | level : Critical
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 16, in personalize
+    win.eval('tk::PlaceWindow . center')
+    ^^^^^^^^
+AttributeError: 'CTkToplevel' object has no attribute 'eval'
+
+2024-03-09 19:23:19.331893
+ An error Occured | level : Critical
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 93, in createHelpBox
+    raise AttributeError
+AttributeError
+
+2024-03-09 19:26:06.874094
+ An error Occured | level : Critical
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 62, in personalize
+    text_label.pack(padx = 20, pady = 15)
+  File "C:\Users\ywan\AppData\Local\Programs\Python\Python313\Lib\site-packages\customtkinter\windows\widgets\core_widget_classes\ctk_base_class.py", line 298, in pack
+    return super().pack(**self._apply_argument_scaling(kwargs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ywan\AppData\Local\Programs\Python\Python313\Lib\tkinter\__init__.py", line 2532, in pack_configure
+    self.tk.call(
+_tkinter.TclError: cannot use geometry manager pack inside .!ctktoplevel.!ctkframe which already has slaves managed by grid
+
+2024-03-10 12:01:40.502408
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 56, in personalize
+    test_element = ct.CTkOptionMenu(text_frame, values = AppAttr.get("widsets")[3],
+                                                         ~~~~~~~~~~~~~~~~~~~~~~^^^
+KeyError: 3
+
+2024-03-10 12:02:20.478894
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 56, in personalize
+    test_element = ct.CTkOptionMenu(text_frame, values = AppAttr.get("widsets")[3],
+                                                         ~~~~~~~~~~~~~~~~~~~~~~^^^
+KeyError: 3
+
+2024-03-10 12:03:09.703046
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 62, in personalize
+    test_element = ct.CTkSlider(text_frame, from_ = self.slider_dict[kwargs["parameter"]][0],
+                                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'state'
+
+2024-03-10 12:04:05.188099
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 62, in personalize
+    test_element = ct.CTkSlider(text_frame, from_ = self.slider_dict[kwargs["parameter"]][0],
+                                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'state'
+
+2024-03-10 12:05:27.503924
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 62, in personalize
+    test_element = ct.CTkSlider(text_frame, from_ = self.slider_dict[kwargs["parameter"]][0],
+                                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'state'
+
+2024-03-10 12:21:57.845041
+ An error Occured | level : Critical
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 66, in personalize
+    test_element.set(exemple.cget(kwargs["parameter"]))
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'CTkSwitch' object has no attribute 'set'. Did you mean: 'get'?
+
+2024-03-10 13:54:44.340293 | New session started
+
+
+ 2024-03-10 13:54:47.036621 | new project : helpbox
+
+ 2024-03-10 13:54:49.074522 | new project : None
+
+ 2024-03-10 13:54:49.950642 | new project : test
+
+ 2024-03-10 13:54:51.241922 | new project : test2
+
+ 2024-03-10 13:54:52.613755 | widget name list : ['', 'frame1', 'bt1', 'optionmenu1']
+
+ 2024-03-10 13:54:56.087098 | actual widget opened : optionmenu1
+
+ 2024-03-10 13:54:56.089643 | widget settings list : [{}, {}, {}, {'name': 'optionmenu1', 'ID': 'optionmenu', 'master': 'window', 'slaves': 0, 'layout': None, 'initcode': 'optionmenu1 = customtkinter.CTkOptionMenu(window)\n', 'l
+ ayoutcode': 'optionmenu1.pack()'}]
+
+ 2024-03-10 13:54:56.089643 | actual widget's ID : optionmenu
+
+ 2024-03-10 13:55:02.400145 | window settings : {'width': 1650, 'height': 720, 'color': 'dark-blue', 'theme': 'dark', 'tooltip': 'Non', 'detail': 'Complet', 'display': 'windowed', 'language': 'Français', 'int_language': 1}
+
+ 2024-03-10 13:55:02.400145 | language used : 1
+
+ 2024-03-10 13:55:02.570113 | actual widget opened : optionmenu1
+
+ 2024-03-10 13:55:02.570113 | widget settings list : [{}, {}, {}, {'name': 'optionmenu1', 'ID': 'optionmenu', 'master': 'window', 'slaves': 0, 'layout': None, 'initcode': 'optionmenu1 = customtkinter.CTkOptionMenu(window)\n', 'l
+ ayoutcode': 'optionmenu1.pack()'}]
+
+ 2024-03-10 13:55:02.570113 | actual widget's ID : optionmenu
+
+ 2024-03-10 13:55:03.977323 | actual widget opened : frame1
+
+ 2024-03-10 13:55:03.977323 | widget settings list : [{'width': 200, 'height': 200}, {}, {}, {'name': 'frame1', 'ID': 'frame', 'slaves': 0, 'layout': 'grid', 'initcode': 'frame1 = customtkinter.CTkFrame(window)\n', 'layoutcode':
+  'frame1.grid()\n', 'master': 'window'}]
+
+ 2024-03-10 13:55:03.977323 | actual widget's ID : frame
+
+ 2024-03-10 13:55:06.783609 | actual widget opened : bt1
+
+ 2024-03-10 13:55:06.783609 | widget settings list : [{'width': 200, 'height': 200, 'text': 'ceci est un test', 'font': '0', 'command': None}, {}, {}, {'name': 'bt1', 'ID': 'bt', 'slaves': False, 'layout': 'pack', 'initcode': "b
+ t1 = customtkinter.CTkButton(frame1, text = 'ceci est un test')\n", 'layoutcode': 'bt1.pack()\n', 'master': 'frame1'}]
+
+ 2024-03-10 13:55:06.783609 | actual widget's ID : bt
+
+ 2024-03-10 13:55:11.086749 | actual widget opened : optionmenu1
+
+ 2024-03-10 13:55:11.086749 | widget settings list : [{}, {}, {}, {'name': 'optionmenu1', 'ID': 'optionmenu', 'master': 'window', 'slaves': 0, 'layout': None, 'initcode': 'optionmenu1 = customtkinter.CTkOptionMenu(window)\n', 'l
+ ayoutcode': 'optionmenu1.pack()'}]
+
+ 2024-03-10 13:55:11.086749 | actual widget's ID : optionmenu
+
+ 2024-03-10 13:55:18.843663 | actual widget's ID : entry
+
+ 2024-03-10 13:55:18.857885 | actual widget opened : entry1
+
+ 2024-03-10 13:55:18.857885 | actual cache : [('<add>', 'entry1')]
+
+ 2024-03-10 13:55:18.857885 | widget name list : ['', 'frame1', 'bt1', 'optionmenu1', 'entry1']
+
+ 2024-03-10 13:55:19.832645 | actual widget opened : entry1
+
+ 2024-03-10 13:55:19.832645 | widget settings list : [{}, {}, {}, {'name': 'entry1', 'ID': 'entry', 'master': 'window', 'slaves': 0, 'layout': None, 'initcode': 'entry1 = customtkinter.CTkEntry(window)\n', 'layoutcode': 'entry1.
+ pack()'}]
+
+ 2024-03-10 13:55:19.832645 | actual widget's ID : entry
+
+ 2024-03-10 13:55:25.238669 | actual widget's ID : label
+
+ 2024-03-10 13:55:25.255520 | actual widget opened : label1
+
+ 2024-03-10 13:55:25.255520 | actual cache : [('<add>', 'entry1'), ('<add>', 'label1')]
+
+ 2024-03-10 13:55:25.255520 | widget name list : ['', 'frame1', 'bt1', 'optionmenu1', 'entry1', 'label1']
+
+ 2024-03-10 13:55:26.593696 | actual widget opened : label1
+
+ 2024-03-10 13:55:26.593696 | widget settings list : [{}, {}, {}, {'name': 'label1', 'ID': 'label', 'master': 'window', 'slaves': 0, 'layout': None, 'initcode': 'label1 = customtkinter.CTkLabel(window)\n', 'layoutcode': 'label1.
+ pack()'}]
+
+ 2024-03-10 13:55:26.593696 | actual widget's ID : label
+
+ session closed
+
+2024-03-10 15:23:52.027299 | New session started
+
+
+ 2024-03-10 15:23:53.895009 | new project : projet exemple
+
+ 2024-03-10 15:23:55.154353 | widget name list : ['', 'frame', 'button', 'entry', 'label']
+
+ 2024-03-10 15:23:56.458170 | actual widget opened : label
+
+ 2024-03-10 15:23:56.473794 | widget settings list : [{'width': 200, 'height': 200, 'text': 'Entrez un nombre :', 'font': '1'}, {'family': 'Arial', 'size': 20, 'weight': 'bold'}, {'padx': 10, 'pady': 5, 'column': 0, 'columnspan'
+ : 2, 'row': 0, 'sticky': 'W'}, {'name': 'label', 'ID': 'label', 'slaves': False, 'layout': 'grid', 'initcode': "label = customtkinter.CTkLabel(frame, text = 'Entrez un nombr
+ e :', font = customtkinter.CTkFont(family = 'Arial' ,size = 20 ,weight = 'bold' ))\n", 'layoutcode': "label.grid(padx = 10 ,pady = 5 ,column = 0 ,columnspan = 2 ,row = 0 ,st
+ icky = 'W' )\n", 'master': 'frame'}]
+
+ 2024-03-10 15:23:56.473794 | actual widget's ID : label
+
+ session closed
+
+2024-03-10 16:53:37.446912
+ An error Occured | level : Critical
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\programmation\saturne perso\helpBox.py", line 68, in personalize
+    test_element.set(exemple.cget(kwargs["parameter"]))
+                     ^^^^^^^
+UnboundLocalError: cannot access local variable 'exemple' where it is not associated with a value
+
+2024-03-10 16:53:31.345660 | New session started
+
+
+ 2024-03-10 16:53:33.242150 | new project : projet exemple
+
+ 2024-03-10 16:53:34.309454 | widget name list : ['', 'frame', 'button', 'entry', 'label']
+
+ 2024-03-10 16:53:35.056876 | actual widget opened : frame
+
+ 2024-03-10 16:53:35.060883 | widget settings list : [{'width': 200, 'height': 200}, {}, {}, {'name': 'frame', 'ID': 'frame', 'slaves': 5, 'layout': 'pack', 'initcode': 'frame = customtkinter.CTkFrame(window)\n', 'layoutcode': '
+ frame.pack()\n', 'master': 'window'}]
+
+ 2024-03-10 16:53:35.060883 | actual widget's ID : frame
+
+ session closed
+
+2024-03-10 16:54:27.757380 | New session started
+
+
+ 2024-03-10 16:54:29.849761 | new project : projet exemple
+
+ 2024-03-10 16:54:30.441288 | widget name list : ['', 'frame', 'button', 'entry', 'label']
+
+ 2024-03-10 16:54:32.023295 | actual widget opened : button
+
+ 2024-03-10 16:54:32.023295 | widget settings list : [{'width': 200, 'height': 200, 'border_spacing': '2', 'text': 'valider', 'font': '1', 'hover': 'False', 'command': None}, {'family': 'Arial', 'size': 15, 'weight': 'bold'}, {'
+ padx': 10, 'column': 1, 'row': 1, 'sticky': 'W'}, {'name': 'button', 'ID': 'bt', 'slaves': False, 'layout': 'grid', 'initcode': "button = customtkinter.CTkButton(frame, bord
+ er_spacing = 2, text = 'valider', font = customtkinter.CTkFont(family = 'Arial' ,size = 15 ,weight = 'bold' ), hover = False)\n", 'layoutcode': "button.grid(padx = 10 ,colum
+ n = 1 ,row = 1 ,sticky = 'W' )\n", 'master': 'frame'}]
+
+ 2024-03-10 16:54:32.023295 | actual widget's ID : bt
+
+ 2024-03-10 16:55:33.435765 | window settings : {'width': 1650, 'height': 720, 'color': 'dark-blue', 'theme': 'dark', 'tooltip': 'Oui', 'detail': 'Complet', 'display': 'windowed', 'language': 'Français', 'int_language': 1}
+
+ 2024-03-10 16:55:33.435765 | language used : 1
+
+ 2024-03-10 16:55:33.668368 | actual widget opened : button
+
+ 2024-03-10 16:55:33.669437 | widget settings list : [{'width': 200, 'height': 200, 'border_spacing': '2', 'text': 'valider', 'font': '1', 'hover': 'False', 'command': None}, {'family': 'Arial', 'size': 15, 'weight': 'bold'}, {'
+ padx': 10, 'column': 1, 'row': 1, 'sticky': 'W'}, {'name': 'button', 'ID': 'bt', 'slaves': False, 'layout': 'grid', 'initcode': "button = customtkinter.CTkButton(frame, bord
+ er_spacing = 2, text = 'valider', font = customtkinter.CTkFont(family = 'Arial' ,size = 15 ,weight = 'bold' ), hover = False)\n", 'layoutcode': "button.grid(padx = 10 ,colum
+ n = 1 ,row = 1 ,sticky = 'W' )\n", 'master': 'frame'}]
+
+ 2024-03-10 16:55:33.669437 | actual widget's ID : bt
+
+ 2024-03-10 16:55:43.152650 | actual widget opened : button
+
+ 2024-03-10 16:55:43.152650 | widget settings list : [{'width': 200, 'height': 200, 'border_spacing': '2', 'text': 'valider', 'font': '1', 'hover': 'False', 'command': None}, {'family': 'Arial', 'size': 15, 'weight': 'bold'}, {'
+ padx': 10, 'column': 1, 'row': 1, 'sticky': 'W'}, {'name': 'button', 'ID': 'bt', 'slaves': False, 'layout': 'grid', 'initcode': "button = customtkinter.CTkButton(frame, bord
+ er_spacing = 2, text = 'valider', font = customtkinter.CTkFont(family = 'Arial' ,size = 15 ,weight = 'bold' ), hover = False)\n", 'layoutcode': "button.grid(padx = 10 ,colum
+ n = 1 ,row = 1 ,sticky = 'W' )\n", 'master': 'frame'}]
+
+ 2024-03-10 16:55:43.152650 | actual widget's ID : bt
+
+ 2024-03-10 16:55:44.075305 | new project : projet exemple
+
+ 2024-03-10 16:55:56.566344 | new project : None
+
+ 2024-03-10 16:55:56.566344 | widget name list : []
+
+ 2024-03-10 16:55:56.566344 | actual widget opened : None
+
+ 2024-03-10 16:56:00.382240 | new project : projet exemple
+
+ 2024-03-10 16:56:00.814489 | widget name list : ['', 'frame', 'button', 'entry', 'label']
+
+ 2024-03-10 16:56:02.572397 | actual widget opened : button
+
+ 2024-03-10 16:56:02.572910 | widget settings list : [{'width': 200, 'height': 200, 'border_spacing': '2', 'text': 'valider', 'font': '1', 'hover': 'False', 'command': None}, {'family': 'Arial', 'size': 15, 'weight': 'bold'}, {'
+ padx': 10, 'column': 1, 'row': 1, 'sticky': 'W'}, {'name': 'button', 'ID': 'bt', 'slaves': False, 'layout': 'grid', 'initcode': "button = customtkinter.CTkButton(frame, bord
+ er_spacing = 2, text = 'valider', font = customtkinter.CTkFont(family = 'Arial' ,size = 15 ,weight = 'bold' ), hover = False)\n", 'layoutcode': "button.grid(padx = 10 ,colum
+ n = 1 ,row = 1 ,sticky = 'W' )\n", 'master': 'frame'}]
+
+ 2024-03-10 16:56:02.572910 | actual widget's ID : bt
+
+ session closed

@@ -3,6 +3,8 @@ from typing import *
 import os
 import json
 from appattr import AppAttr
+import traceback
+
 
 
 class FileOperation():
@@ -26,7 +28,8 @@ class FileOperation():
                 pass
         if "prjtset.json" not in files :
             with open(path +"\\"+ 'prjtset.json', "w") as file :
-                pass
+                sets = {"PrjtName": "", "WinName": "", "height": "", "width": ""}
+                json.dump(sets, file)
         if "widNmeList.txt" not in files :
             with open(path +"\\"+ 'widNmeList.txt', "w") as file :
                 pass
@@ -55,12 +58,15 @@ class FileOperation():
         path : str
             chemin d'accès à un dossier
         """
-        files_list = os.listdir(path)
-        for files in files_list :
-            try: 
-                os.remove(path + "\\" + files)
-            except : 
-                os.rmdir()
+        try :
+            files_list = os.listdir(path)
+            for files in files_list :
+                try: 
+                    os.remove(path + "\\" + files)
+                except : 
+                    os.rmdir()
+        except :
+            os.remove(path)
 
 
     @staticmethod
@@ -108,7 +114,8 @@ class ProjectOperation():
         try :
             os.mkdir(path)
             with open(path +"\\"+ 'prjtset.json', "w") as file :
-                pass
+                sets = {"PrjtName": "", "WinName": "", "height": "", "width": ""}
+                json.dump(sets, file)
             with open(path +"\\"+ 'code.py', "w") as file :
                 file.write("import customtkinter\n\nwindow = customtkinter.CTk()\n\n")
             with open(path +"\\"+ 'widNmeList.txt', "w") as file :
@@ -138,9 +145,12 @@ class ProjectOperation():
         try :
             os.rename(os.path.join(os.getcwd(), AppAttr.get("project")), os.path.join(os.getcwd(), newname))
             return True
-        except any as error :
-            print(error)
-            return False
+        except Exception as error:
+                error_level = AppAttr.getErrorlevel(error)
+                with open("rssDir"+ "\\" +"logs.txt", "a", encoding= 'utf8') as log:
+                    log.write(f"\n An error Occured | level : {error_level}\n")
+                    traceback.print_exc(file = log)
+                return False 
 
     @staticmethod
     def rmDirectory() -> None:
@@ -199,6 +209,9 @@ class ProjectOperation():
             widnamelist +="," + keys 
         with open(path +"\\"+ 'widNmeList.txt', "w", encoding= 'utf8') as file :
             file.write(widnamelist)
+
+        with open(path +"\\"+ 'code.py', "w", encoding= 'utf8') as file :
+            file.write(AppAttr.get("code"))
         
 
 class AnnexOperation():
@@ -209,46 +222,9 @@ class AnnexOperation():
     -verifyApp
     -loadInfo
     """
-
+        
 
     @staticmethod
-    def verifyApp() -> Union[str, bool]:
-        """verifyApp 
-        fonction de vérification que tous les fichiers de l'applications sont présents
-
-        Returns
-        -------
-        Union[str, bool]
-            renvoie True si tous les fichiers sont présents, renvoie le nom du fichier manquant sinon
-        """
-        path = os.getcwd()
-        cfiles = os.listdir(path)
-        if 'addWidgetTool.py' not in cfiles :
-            return 'addWidgetTool.py'
-        if "fileManagemt.py" not in cfiles :
-            return "fileManagemt.py"
-        if "projectApp.py" not in cfiles :
-            return "projectApp.py"
-        if "settingsApp.py" not in cfiles :
-            return "settingsApp.py"
-        if "widgetApp.py" not in cfiles :
-            return "widgetApp.py"
-        if "tool_tip.py" not in cfiles :
-            return "tool_tip.py"
-        cfiles =os.listdir(path + "\\" + "rssDir")
-        if 'prjctNameSave.txt' not in cfiles :
-            return "prjctNameSave.txt"
-        if "wdSettings.json" not in cfiles :
-            return "wdSettings.json"
-        if "widgetInfo.json" not in cfiles :
-            return "widgetInfo.json"
-        if "widgetRss.json" not in cfiles :
-            return "widgetRss.json"
-        if "widParaInfo.json" not in cfiles :
-            return "widParaInfo.json"
-        return True
-
-
     def loadInfo(data : str = 'prjctInfo') -> Union[dict, list, None]:
         """loadInfo _summary_
         Fonction de chargement des données des fichiers
@@ -282,49 +258,83 @@ class AnnexOperation():
             if FileOperation.verifyDir(path = path) :
                 try : 
                     with open(path + '\\prjtset.json', "r", encoding= 'utf8' ) as file:
-                        return json.load(file)
-                except :
-                    return None
+                        data = json.load(file)
+                    if len(data) == 0 :
+                        raise Exception
+                    else :
+                        return data
+                except Exception as error:
+                    error_level = AppAttr.getErrorlevel(error)
+                    if error_level == "Undefined" :
+                        error_message = f"This error most likely seem to come from an empty project's settings dictionnary\n corrupted project : {AppAttr.get("project")}\n"
+                    else :
+                        error_message = ""
+                    with open("rssDir"+ "\\" +"logs.txt", "a", encoding= 'utf8') as log:
+                        log.write(f"\n An error Occured | level : {error_level}\n{error_message}")
+                        traceback.print_exc(file = log)
+                    return False
+        
         if data == "widNameList" :
             try :
                 path = FileOperation.createPath(AppAttr.get("project"))
                 with open(path + "\\" +"widNmeList.txt", 'r', encoding= 'utf8') as file :
                     widsaved = file.read().split(",")
-                file.close()
-                return widsaved
-            except :
-                return []
-        if data == "actualwidSet" :
-            try :
-                path = FileOperation.createPath(AppAttr.get( "project") + "\\" + AppAttr.get("widget") + ".json")
-                with open(path, 'r', encoding= 'utf8') as file :
-                    return json.load(file)
-            except :
-                return None
+                    print(widsaved, len(AppAttr.get("prjtwidsetslist")))
+                if widsaved == [""] and len(AppAttr.get("prjtwidsetslist")) > 0:
+                    raise Exception
+                else :
+                    return widsaved
+           
+            except Exception as error:
+                    error_level = AppAttr.getErrorlevel(error)
+                    if error_level == "Undefined" :
+                        error_message = f"This error most likely seem to come from an empty widget name list\n corrupted project : {AppAttr.get("project")}\n"
+                    else :
+                        error_message = ""
+                    with open("rssDir"+ "\\" +"logs.txt", "a", encoding= 'utf8') as log:
+                        log.write(f"\n An error Occured | level : {error_level}\n{error_message}")
+                        traceback.print_exc(file = log)
+                    return False
+
         if data == "prjtCode" :
             try :
                 path = FileOperation.createPath(AppAttr.get("project") + "\\" + "code.py")
                 with open(path, "r", encoding= 'utf8') as file :
                     return file.read()
-            except any as error :
-                print(error)
-                return None
+            
+            except Exception as error:
+                    error_level = AppAttr.getErrorlevel(error)
+                    with open("rssDir"+ "\\" +"logs.txt", "a", encoding= 'utf8') as log:
+                        log.write(f"\n An error Occured | level : {error_level}\n")
+                        traceback.print_exc(file = log)
+                    return False
+        
         if data == "prjtCodeList" :
             try :
                 path = FileOperation.createPath(AppAttr.get("project") + "\\" + "code.py")
                 with open(path, "r", encoding= 'utf8') as file :
                     return file.readlines()
-            except any as error :
-                print(error)
-                return None
+            
+            except Exception as error:
+                    error_level = AppAttr.getErrorlevel(error)
+                    with open("rssDir"+ "\\" +"logs.txt", "a", encoding= 'utf8') as log:
+                        log.write(f"\n An error Occured | level : {error_level}\n")
+                        traceback.print_exc(file = log)
+                    return False
+        
         if data == "initwidsetlist":
             try:
                 path = FileOperation.createPath(AppAttr.get("project")) + "\\" + "widgetlist.json"
                 with open(path, "r", encoding="utf8") as file :
                     AppAttr.config("prjtwidsetslist", json.load(file))
-            except any as error :
-                print(error)
-                return None
+                    return True
+            
+            except Exception as error:
+                    error_level = AppAttr.getErrorlevel(error)
+                    with open("rssDir"+ "\\" +"logs.txt", "a", encoding= 'utf8') as log:
+                        log.write(f"\n An error Occured | level : {error_level}\n")
+                        traceback.print_exc(file = log)
+                    return False
            
 
 if __name__ == "__main__" :

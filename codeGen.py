@@ -1,6 +1,6 @@
 #fichier créant le code en python
-from fileOpening import AnnexOperation
 from appattr import AppAttr
+
 
 class CodeGeneration():
 
@@ -13,30 +13,30 @@ class CodeGeneration():
 
     @classmethod
     def mWinCode(cls, old_data, data):
-        code_dico = AnnexOperation.loadInfo(data = "prjtCodeList")
+        code = AppAttr.get("code_list")
         try :
             if data["WinName"] != "" and data["WinName"] != old_data["WinName"] :
-                if f"window.title('{old_data["WinName"]}')\n" in code_dico :
-                    del code_dico[code_dico.index(f"window.title('{old_data["WinName"]}')\n")]
-                code_dico.insert(5, f"window.title('{data["WinName"]}')\n")
+                if f"window.title('{old_data["WinName"]}')\n" in code :
+                    del code[code.index(f"window.title('{old_data["WinName"]}')\n")]
+                code.insert(5, f"window.title('{data["WinName"]}')\n")
         except any as error:
             print(error)
         
         try :
             if data["height"] == "" or data["width"] == "" :
-                if f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" in code_dico :
-                    del code_dico[code_dico.index(f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n")]
+                if f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" in code :
+                    del code[code.index(f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n")]
             
-            elif data["height"] > 50 and data["width"] > 50 and f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" not in code_dico :
-                code_dico.insert(6, f"window.geometry('{data["height"]}x{data["width"]}')\n")
+            elif data["height"] > 50 and data["width"] > 50 and f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" not in code :
+                code.insert(6, f"window.geometry('{data["height"]}x{data["width"]}')\n")
             
-            elif f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" in code_dico :
-                del code_dico[code_dico.index(f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n")]
-                code_dico.insert(6, f"window.geometry('{data["height"]}x{data["width"]}')\n")
+            elif f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" in code :
+                del code[code.index(f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n")]
+                code.insert(6, f"window.geometry('{data["height"]}x{data["width"]}')\n")
         except any as error:
             print(error)
-        code_dico.insert(7, "\n")
-        return code_dico
+        code.insert(7, "\n")
+        AppAttr.config("code_list", code)
     
 
     @classmethod
@@ -59,7 +59,7 @@ class CodeGeneration():
         init_seq += cls._cPC(data)
         init_seq += ')\n'
         layout_seq = cls._cLC(data)
-        return [init_seq, layout_seq, "\n"]
+        return [init_seq, layout_seq]
     
 
     @classmethod
@@ -68,7 +68,7 @@ class CodeGeneration():
         for keys, values in data[0].items() :
             if keys in ["name", "ID", "layout", "master"]:
                 pass
-            elif keys == "text" :
+            if  keys == "text" :
                 sets_seq += f", {keys} = '{values}'"
             elif values != AppAttr.get("widsets")[keys][0] and keys != "text": 
                 if keys == "font" and values != "0":
@@ -78,7 +78,16 @@ class CodeGeneration():
                     if keys in cls.str_sets:
                         sets_seq += f", {keys} = '{values}'"
                     elif keys == "values" :
-                        sets_seq += f", {keys} = [{values}]"
+                        if len(values) > 0 :
+                            sub_seq = "["
+                            for element in values :
+                                sub_seq += f"\"{element}\","
+                            sub_seq = sub_seq[:-1] + "]"
+                            sets_seq += f", {keys} = {sub_seq}"
+                    elif keys == "command" :
+                        pass
+                    elif keys == "variable" :
+                        pass
                     else :
                         sets_seq += f", {keys} = {values}"
         return sets_seq
@@ -106,7 +115,6 @@ class CodeGeneration():
         list
             _description_
         """
-        print(data[3]["layout"])
         if data[3]["layout"] != None :
             layout_seq = f"{data[3]["name"]}.{data[3]["layout"]}("
             for sets, val in data[2].items():
@@ -121,10 +129,9 @@ class CodeGeneration():
 
     @classmethod
     def mWidCode(cls):
-        code = AnnexOperation.loadInfo(data = "prjtCodeList")
+        code = AppAttr.get("code_list")
         old_widcode = AppAttr.get("widsetlist")
-        print(AppAttr.get("widget"))
-        new_widcode = cls.createWidCode(data = AppAttr.get("prjtwidsetslist")[AppAttr.get("widget")])
+        new_widcode = cls.createWidCode(data = AppAttr.get("prjtwidsetslist")[AppAttr.get("widget")[1]])
         if old_widcode[3]["initcode"] in code :
             code.insert(code.index(old_widcode[3]["initcode"]), new_widcode[0])
             del code[code.index(old_widcode[3]["initcode"])]
@@ -136,27 +143,36 @@ class CodeGeneration():
             del code[code.index(old_widcode[3]["layoutcode"])]
         else :
             code.append(new_widcode[1])
+
+        if AppAttr.get("widget")[0] != AppAttr.get("widget")[1] :
+            for lines in code :
+                if lines != new_widcode[0] and lines != new_widcode[1] :
+                    code[code.index(lines)] = lines.replace(AppAttr.get("widget")[0], AppAttr.get("widget")[1])
+
         data = AppAttr.get("prjtwidsetslist")
-        subdata = data[AppAttr.get("widget")]
+        for  dico in data.values() :
+            if dico[3]["master"] == AppAttr.get("widget")[0]:
+                dico[3]["master"] = AppAttr.get("widget")[1]
+        subdata = data[AppAttr.get("widget")[1]]
         subdata[3]["initcode"] = new_widcode[0]
         subdata[3]["layoutcode"] = new_widcode[1]
-        data[AppAttr.get("widget")] = subdata
+        data[AppAttr.get("widget")[1]] = subdata
         AppAttr.config("prjtwidsetslist", data)
-        AppAttr.config("widsetlist", data[AppAttr.get("widget")])
+        AppAttr.config("widsetlist", subdata)
+        AppAttr.config("widget", AppAttr.get("widget")[1])
 
+        if code.index(new_widcode[1]) == len(code) -1 :
+            code.append("\n")
 
-        code.append(new_widcode[2])
-
-        return code
+        AppAttr.config("code_list", code)
 
 
     def delWidCode(cls):
-        code = AnnexOperation.loadInfo(data = "prjtCodeList")
+        code = AppAttr.get("code_list")
         for lines in code :
             if AppAttr.get("widsetlist")[3]["initcode"] in lines :
                 del code[code.index(lines):code.index(lines)+3]
-            
-        return code
+        AppAttr.config("code_list", code)
 
 
 if __name__ == "__main__" :

@@ -4,6 +4,7 @@ from intermediateLayer import *
 import tool_tip as tl
 from appattr import AppAttr
 
+
 class ProjectApp(ct.CTkToplevel):
 
     def __init__(self, reason):
@@ -30,9 +31,13 @@ class ProjectApp(ct.CTkToplevel):
         else :
             self.sideFrameUpdating()
             self.modifyFrame(reason) if reason != None else self.workFrameCreation()
+        self.eventControl("init")
+
+        
 
 
-    def workFrameCreation(self):
+    def workFrameCreation(self, *event):
+        self.eventControl("add")
         self.clear("workFrame")
         
         self.project_label = ct.CTkLabel(self.work_frame, text = AppAttr.get("langdict")["project_label"][self.language], width=600)
@@ -45,10 +50,13 @@ class ProjectApp(ct.CTkToplevel):
 
 
     def modifyFrame(self, project):
+        self.eventControl("mod")
         self.clear("workFrame")
 
         AppAttr.config("project", project)
         dico = self.loadPrjctInfo()
+        if dico == False :
+            messagebox.showwarning("Error", "An error occured while loading the project's settings.\nSee the logs for more details")
 
 
         #-------------------- création des frames -------------------- 
@@ -85,13 +93,13 @@ class ProjectApp(ct.CTkToplevel):
         self.prjt_name.insert(0, AppAttr.get("project"))
 
         self.win_name = ct.CTkEntry(self.upper_frame, width = 100)
-        self.win_name.insert(0, dico['WinName'] if dico != None else "")
+        self.win_name.insert(0, dico['WinName'] if dico != False else "")
 
         self.win_height = ct.CTkEntry(self.upper_frame, width=90)
-        self.win_height.insert(0, dico["height"] if dico != None else "")
+        self.win_height.insert(0, dico["height"] if dico != False else "")
 
         self.win_width = ct.CTkEntry(self.upper_frame, width=90)
-        self.win_width.insert(0, dico["width"] if dico != None else "")
+        self.win_width.insert(0, dico["width"] if dico != False else "")
 
 
         self.prjt_name.grid(row = 0, column = 1)
@@ -116,11 +124,11 @@ class ProjectApp(ct.CTkToplevel):
 
 
     def loadPrjctInfo(self):
-        dico =  ProjectReq.getPrjtSetRqst()
-        return dico
+        return  ProjectReq.getPrjtSetRqst()
+
             
 
-    def modifyInfo(self):
+    def modifyInfo(self, *event):
         modify = True
         try : 
             name = self.win_name.get()
@@ -163,7 +171,7 @@ class ProjectApp(ct.CTkToplevel):
                     self.project_info.insert(self.project_info.index(AppAttr.get("project")), newname)
                     del self.project_info[self.project_info.index(AppAttr.get("project"))]
                     converted_info = ",".join(self.project_info)
-                    with open("rssDir\prjctNameSave.txt", "w", encoding= 'utf8') as file :
+                    with open("rssDir" +"\\"+  "prjctNameSave.txt", "w", encoding= 'utf8') as file :
                         file.write(converted_info)
                     file.close()
                     AppAttr.config("project", newname )
@@ -173,7 +181,7 @@ class ProjectApp(ct.CTkToplevel):
 
     
     def openProjectInfo(self):
-        with open("rssDir\prjctNameSave.txt", "r", encoding= 'utf8') as file :
+        with open("rssDir" +"\\"+  "prjctNameSave.txt", "r", encoding= 'utf8') as file :
             self.project_info = file.read().split(",")
         file.close()
 
@@ -190,8 +198,9 @@ class ProjectApp(ct.CTkToplevel):
                 bt.grid(padx = 10, pady = 5)
 
 
-    def addProject(self):
+    def addProject(self, *event):
         AppAttr.config( "project", self.entry.get())
+        print(AppAttr.get("project"))
         if AppAttr.get( "project") != "" and type(AppAttr.get( "project")) == str :
             ProjectReq.newPrjctRqst()
         else : return
@@ -199,7 +208,7 @@ class ProjectApp(ct.CTkToplevel):
         converted_info = ",".join(self.project_info)
 
         
-        with open("rssDir\prjctNameSave.txt", "w", encoding= 'utf8') as file :
+        with open("rssDir" +"\\"+  "prjctNameSave.txt", "w", encoding= 'utf8') as file :
             file.write(converted_info)
         file.close()
         
@@ -210,15 +219,15 @@ class ProjectApp(ct.CTkToplevel):
         self.modifyFrame(AppAttr.get( "project"))
 
 
-    def delProject(self):
+    def delProject(self, *event):
         try : 
             if type(AppAttr.get("project")) == str :
                 ProjectReq.rmproject()
-            
+
             del self.project_info[self.project_info.index(AppAttr.get("project"))]
             converted_info = ",".join(self.project_info)
             
-            with open("rssDir\prjctNameSave.txt", "w", encoding= 'utf8') as file :
+            with open("rssDir" +"\\"+  "prjctNameSave.txt", "w", encoding= 'utf8') as file :
                 file.write(converted_info)
             file.close()
             AppAttr.config("project", None)
@@ -239,7 +248,7 @@ class ProjectApp(ct.CTkToplevel):
             widgets.destroy()
 
     
-    def validate(self):
+    def validate(self, *event) -> NoReturn :
         self.validation = True
         self.destroy()
 
@@ -248,6 +257,35 @@ class ProjectApp(ct.CTkToplevel):
         self.wait_window()
         if self.validation != True :
             AppAttr.config("project", None)
+
+    def eventControl(self, event : str) -> None:
+        if event == "add" :
+            self.unbind("<Control-o>")
+            self.unbind("<Control-s>")
+            self.unbind("<Control-w>")
+            self.bind("<Control-a>", self.addProject)
+        if event == "mod" :
+            self.unbind("<Control-a>")
+            self.bind("<Control-o>", self.validate)
+            self.bind("<Control-s>", self.modifyInfo)
+            self.bind("<Control-w>", self.delProject)
+        if event == "init" :
+            self.bind("<Control-t>", self.workFrameCreation)
+            self.bind("<Control-Key-1>", lambda event : self.eventControl(0))
+            self.bind("<Control-Key-2>", lambda event : self.eventControl(1))
+            self.bind("<Control-Key-3>", lambda event : self.eventControl(2))
+            self.bind("<Control-Key-4>", lambda event : self.eventControl(3))
+            self.bind("<Control-Key-5>", lambda event : self.eventControl(4))
+            self.bind("<Control-Key-6>", lambda event : self.eventControl(5))
+            self.bind("<Control-Key-7>", lambda event : self.eventControl(6))
+            self.bind("<Control-Key-8>", lambda event : self.eventControl(7))
+            self.bind("<Control-Key-9>", lambda event : self.eventControl(8))
+        if type(event) == int :
+            if event >= len(self.project_info):
+                pass
+            else : 
+                self.modifyFrame(self.project_info[event])
+
   
 
 if __name__ == "__main__" :

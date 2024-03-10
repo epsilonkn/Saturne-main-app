@@ -31,7 +31,6 @@ class FileModification():
         """
         sets = AppAttr.get( "widinfo")
         sets = sets[AppAttr.get( "widget_id")]
-        path = FileOperation.createPath(AppAttr.get( "project"))
         flag = False
         incr = 1
         while flag == False :
@@ -55,19 +54,3 @@ class FileModification():
         data = AppAttr.get("prjtwidsetslist")
         data[newname] = [{}, {}, {}, id_card_dict]
         AppAttr.config("prjtwidsetslist", data)
-
-
-    @staticmethod
-    def prepForExe(code):
-        code.append("\nwindow.mainloop()")
-        return code
-
-
-    @staticmethod
-    def sDAE(code):
-        del code[-1]
-        del code[-1]
-        return code
-    
-
-    
