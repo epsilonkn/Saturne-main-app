@@ -31,6 +31,7 @@ class AppAttr():
     _widget = None
     _widget_id = None
     _logs = None
+    _code_indices = {}
 
     print("AppAttr loaded")
 
@@ -147,6 +148,8 @@ class AppAttr():
                 return cls._cache
             case "redo_cache" :
                 return cls._redo_cache
+            case "indices" :
+                return cls._code_indices
 
 
     @classmethod
@@ -218,6 +221,8 @@ class AppAttr():
                 return cls._initConstAttr()
             case "redo_cache" :
                 cls._logs.addToLogs("actual redo cache", cls._redo_cache)
+            case "indices" :
+                cls._code_indices = val
 
     @classmethod
     def getErrorlevel(cls, err):

@@ -54,7 +54,10 @@ class ProjectReq():
             dictionnaire des paramètres du projet
         """
         old_data = AnnexOperation.loadInfo(data = "prjctInfo")
-        CodeGeneration.mWinCode(old_data, dico)
+        code = AnnexOperation.loadInfo(data = "prjtCodeList")
+        AppAttr.config("code_list", code)
+        CodeGeneration.mWinCode(old_data, dico["parameters"])
+        ProjectOperation.wCode(AppAttr.get("code_list"))
         FileModification.modifyPrjtInfo(dico)
 
 
@@ -101,7 +104,10 @@ class ProjectReq():
         AppAttr.config("code_list", init3)
         init1 = AnnexOperation.loadInfo(data = "widNameList")
         AppAttr.config("widnamelist", init1)
-        if init1 == False or init2 == False or init3 == False :
+        init4 = AnnexOperation.loadInfo("prjctInfo")["gen_indices"]
+        print(init4)
+        AppAttr.config("indices", init4)
+        if init1 == False or init2 == False or init3 == False or init4 == False :
             try :
                 raise FileNotFoundError
             except Exception as error:
@@ -367,5 +373,4 @@ class CacheReq():
 
 #possibilité de lancer le programme seul, à des fins de débogage
 if __name__ == "__main__" :
-    name = input("nom : ")
-    #print(tryWN(name))
+    list = ['import customtkinter\n', '\n', 'window = customtkinter.CTk()\n', '\n', '\n', '\n', '\n', '#variables\n', '\n', '\n', '\n', '#functions\n', '\n', '\n', '\n', '#frames\n', '\n', '\n', '\n', '#widgets\n', '\n']

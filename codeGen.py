@@ -14,12 +14,14 @@ class CodeGeneration():
     @classmethod
     def mWinCode(cls, old_data, data):
         code = AppAttr.get("code_list")
+        old_data = old_data["parameters"]
+        print(code)
         try :
-            if data["WinName"] != "" and data["WinName"] != old_data["WinName"] :
-                if f"window.title('{old_data["WinName"]}')\n" in code :
-                    del code[code.index(f"window.title('{old_data["WinName"]}')\n")]
-                code.insert(5, f"window.title('{data["WinName"]}')\n")
-        except any as error:
+            if data["WinName"] != "" :
+                del code[4]
+                code.insert(4, f"window.title('{data["WinName"]}')\n")
+                
+        except any as error: 
             print(error)
         
         try :
@@ -28,14 +30,14 @@ class CodeGeneration():
                     del code[code.index(f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n")]
             
             elif data["height"] > 50 and data["width"] > 50 and f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" not in code :
-                code.insert(6, f"window.geometry('{data["height"]}x{data["width"]}')\n")
+                del code[5]
+                code.insert(5, f"window.geometry('{data["height"]}x{data["width"]}')\n")
             
             elif f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n" in code :
                 del code[code.index(f"window.geometry('{old_data["height"]}x{old_data["width"]}')\n")]
-                code.insert(6, f"window.geometry('{data["height"]}x{data["width"]}')\n")
+                code.insert(5, f"window.geometry('{data["height"]}x{data["width"]}')\n")
         except any as error:
             print(error)
-        code.insert(7, "\n")
         AppAttr.config("code_list", code)
     
 
@@ -86,8 +88,8 @@ class CodeGeneration():
                             sets_seq += f", {keys} = {sub_seq}"
                     elif keys == "command" :
                         pass
-                    elif keys == "variable" :
-                        pass
+                    # elif keys == "variable" :
+                    #     pass #A FAIRE
                     else :
                         sets_seq += f", {keys} = {values}"
         return sets_seq
@@ -129,25 +131,55 @@ class CodeGeneration():
 
     @classmethod
     def mWidCode(cls):
+        indices = AppAttr.get("indices")
         code = AppAttr.get("code_list")
         old_widcode = AppAttr.get("widsetlist")
-        new_widcode = cls.createWidCode(data = AppAttr.get("prjtwidsetslist")[AppAttr.get("widget")[1]])
+        print(indices)
+        new_widlist = AppAttr.get("prjtwidsetslist")[AppAttr.get("widget")[1]]
+        new_widcode = cls.createWidCode(data = new_widlist)
+
+
         if old_widcode[3]["initcode"] in code :
             code.insert(code.index(old_widcode[3]["initcode"]), new_widcode[0])
             del code[code.index(old_widcode[3]["initcode"])]
         else :
-            code.append(new_widcode[0])
+            if AppAttr.get("widget_id") == "frame" :
+                code.insert(indices["frame_ind"], new_widcode[0])
+            else :
+                code.append(new_widcode[0])
 
         if old_widcode[3]["layoutcode"] in code :
             code.insert(code.index(old_widcode[3]["layoutcode"]), new_widcode[1])
             del code[code.index(old_widcode[3]["layoutcode"])]
         else :
-            code.append(new_widcode[1])
+            if AppAttr.get("widget_id") == "frame" :
+                code.insert(indices["frame_ind"]+1, new_widcode[1])
+                code.insert(indices["frame_ind"]+2, "\n")
+                indices["frame_ind"] = indices["frame_ind"] +3
+            else :
+                code.append(new_widcode[1])
 
         if AppAttr.get("widget")[0] != AppAttr.get("widget")[1] :
             for lines in code :
                 if lines != new_widcode[0] and lines != new_widcode[1] :
                     code[code.index(lines)] = lines.replace(AppAttr.get("widget")[0], AppAttr.get("widget")[1])
+
+        try : 
+            if "variable" in new_widlist[0].keys() and "variable" not in old_widcode[0].keys() :
+                code.insert(indices["var_ind"], f"{new_widlist[0]["variable"]} = None\n")
+                indices["var_ind"] = indices["var_ind"] + 1
+                indices["funct_ind"] = indices["funct_ind"] + 1
+                indices["frame_ind"] = indices["frame_ind"] + 1
+            elif "variable" in old_widcode[0].keys() and "variable" not in new_widlist[0].keys() :
+                del code[code.index(f"{old_widcode[0]["variable"]} = None\n")]
+                indices["var_ind"] = indices["var_ind"] - 1
+                indices["funct_ind"] = indices["funct_ind"] - 1
+                indices["frame_ind"] = indices["frame_ind"] - 1
+            elif "variable" in old_widcode[0].keys() and "variable" in new_widlist[0].keys() :
+                code.insert(code.index(f"{old_widcode[0]["variable"]} = None\n"), f"{new_widlist[0]["variable"]} = None\n")
+                del code[code.index(f"{old_widcode[0]["variable"]} = None\n")]
+        except Exception as error :
+            print(error)
 
         data = AppAttr.get("prjtwidsetslist")
         for  dico in data.values() :
@@ -168,9 +200,12 @@ class CodeGeneration():
 
 
     def delWidCode(cls):
+        indices = AppAttr.get("indices")
         code = AppAttr.get("code_list")
         for lines in code :
             if AppAttr.get("widsetlist")[3]["initcode"] in lines :
+                if AppAttr.get("widget_id") == "frame" :
+                    indices["frame_ind"] = indices["frame_ind"] +3
                 del code[code.index(lines):code.index(lines)+3]
         AppAttr.config("code_list", code)
 
@@ -178,9 +213,3 @@ class CodeGeneration():
 if __name__ == "__main__" :
     data = [{"name": "optionmenu1", "ID": "optionmenu", "layout": "pack", "master": "self", "width": 200, "height": 200, "corner_radius": "None", "border_width": "None", "bg_color": "transparent", "fg_color": "None", "border_color": "None", "button_color": "None", "button_hover_color": "None", "dropdown_fg_color": "None", "dropdown_hover_color": "None", "dropdown_text_color": "None", "text_color": "None", "text_color_disabled": "None", "font": "1", "dropdown_font": "None", "values": "None", "state": "normal", "hover": "True", "variable": "None", "command": "None"}, {"family": "Arial", "size": 15, "weight": "bold"}, {"ipadx": 20, "ipady": 10, "anchor": "N", "fill": "X", "side": "BOTTOM"}]
     print(CodeGeneration.createWidCode(cls =CodeGeneration,  data = data))
-    # data = {"PrjtName": "nouvtest", "WinName": "inter", "height": 100, "width": 50}
-    # old_data = {"PrjtName": "nouvtest", "WinName": "inter", "height": 100, "width": 50}
-    # path = fileop.createPath("projet" + "\\" + "code.py")
-    # print(path)
-    # print(CodeGeneration.mWinCode(CodeGeneration, old_data, data, path))
-        

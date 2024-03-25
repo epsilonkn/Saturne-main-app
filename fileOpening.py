@@ -13,7 +13,7 @@ class FileOperation():
     """
 
     @staticmethod
-    def _addFiletoDir(cls, path : str) -> None:
+    def _addFiletoDir(path : str) -> None:
         """addFiletoDir 
         fonction d'ajout des fichiers de base à un dossier si ils sont manquant
 
@@ -28,7 +28,7 @@ class FileOperation():
                 pass
         if "prjtset.json" not in files :
             with open(path +"\\"+ 'prjtset.json', "w") as file :
-                sets = {"PrjtName": "", "WinName": "", "height": "", "width": ""}
+                sets = {"parameters" : {"PrjtName": "", "WinName": "", "height": "", "width": ""},"gen_indices" : {"var_ind" : 0, "funct_ind" : 0,"frame_ind" : 0}}
                 json.dump(sets, file)
         if "widNmeList.txt" not in files :
             with open(path +"\\"+ 'widNmeList.txt', "w") as file :
@@ -88,6 +88,8 @@ class FileOperation():
 
 
 class ProjectOperation():
+
+    
     """ProjectOperation 
     class which contain the function dedicated to operations on projects files and directories
 
@@ -114,10 +116,12 @@ class ProjectOperation():
         try :
             os.mkdir(path)
             with open(path +"\\"+ 'prjtset.json', "w") as file :
-                sets = {"PrjtName": "", "WinName": "", "height": "", "width": ""}
+                sets = {"parameters" : {"PrjtName": "", "WinName": "", "height": "", "width": ""},
+                        "gen_indices" : {"var_ind" : 9, "funct_ind" : 12,"frame_ind" : 15}}
                 json.dump(sets, file)
             with open(path +"\\"+ 'code.py', "w") as file :
-                file.write("import customtkinter\n\nwindow = customtkinter.CTk()\n\n")
+                file.writelines(['import customtkinter\n', '\n', 'window = customtkinter.CTk()\n', '\n', '\n', '\n', '\n', '#variables\n', '\n','\n',
+                                  '#functions\n', '\n','\n', '#frames\n', '\n', '\n', '#widgets\n', '\n'])
             with open(path +"\\"+ 'widNmeList.txt', "w") as file :
                 pass
             with open(path +"\\"+ 'widgetlist.json', "w") as file :
@@ -189,10 +193,8 @@ class ProjectOperation():
 
         Parameters
         ----------
-        project : _type_
-            _description_
-        code : _type_
-            _description_
+        code : list
+            code du project sous forme d'une liste
         """
         path = FileOperation.createPath( AppAttr.get("project") + "\\" + "code.py")
         with open(path, "w", encoding= 'utf8') as file :
@@ -212,6 +214,11 @@ class ProjectOperation():
 
         with open(path +"\\"+ 'code.py', "w", encoding= 'utf8') as file :
             file.write(AppAttr.get("code"))
+        with open (path + "\\" + "prjtset.json", 'r', encoding="utf8") as file :
+            sets = json.load(file)
+            newdata = {"parameters" : sets["parameters"], "gen_indices" : AppAttr.get("indices")}
+        with open (path + "\\" + "prjtset.json", 'w', encoding="utf8") as file : 
+            json.dump(newdata, file)  
         
 
 class AnnexOperation():
@@ -335,7 +342,3 @@ class AnnexOperation():
                         log.write(f"\n An error Occured | level : {error_level}\n")
                         traceback.print_exc(file = log)
                     return False
-           
-
-if __name__ == "__main__" :
-    print(AnnexOperation.verifyApp())

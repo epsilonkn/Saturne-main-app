@@ -124,7 +124,9 @@ class ProjectApp(ct.CTkToplevel):
 
 
     def loadPrjctInfo(self):
-        return  ProjectReq.getPrjtSetRqst()
+        dico = ProjectReq.getPrjtSetRqst()
+        self.indices  = dico["gen_indices"]
+        return  dico["parameters"]
 
             
 
@@ -177,7 +179,8 @@ class ProjectApp(ct.CTkToplevel):
                     AppAttr.config("project", newname )
                     self.clear("sideFrame")
                     self.sideFrameUpdating()
-            ProjectReq.modidyPrjctRqst(dico)
+            sets_dico = {"parameters" : dico, "gen_indices" : self.indices}
+            ProjectReq.modidyPrjctRqst(sets_dico)
 
     
     def openProjectInfo(self):
@@ -220,6 +223,9 @@ class ProjectApp(ct.CTkToplevel):
 
 
     def delProject(self, *event):
+        deletion = messagebox.askokcancel("Delete", "Are you sure to delete the project ?")
+        if not deletion :
+            return
         try : 
             if type(AppAttr.get("project")) == str :
                 ProjectReq.rmproject()

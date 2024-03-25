@@ -1,5 +1,4 @@
 #fichier contenant l'interface graphique du programme
-from typing import Union
 import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ct
@@ -226,13 +225,13 @@ class interface(ct.CTk):
                 #on crée le label titre, ainsi que l'entrée permettant de renseigner le nom du widget
                 self.overal_lbl = ct.CTkLabel(self.edit_frame, text = AppAttr.get("widsetlist")[3]["name"],font=ct.CTkFont(size=25, weight="bold"))
 
-                self.widnamelbl = ct.CTkLabel(self.settings_frame, text = "Nom du widget :",font=ct.CTkFont(size=15, weight="bold"))
+                widnamelbl = ct.CTkLabel(self.settings_frame, text = "Nom du widget :",font=ct.CTkFont(size=15, weight="bold"))
                 self.widname = ct.CTkEntry(self.settings_frame, width= 150, height = 40,font=ct.CTkFont(weight="bold"))
-                tl.CreateToolTip(self.widnamelbl, "Nom du widget, attention ce nom sera aussi utilisé comme nom de variable dans le code.") if self.showtooltip == "Oui" else None
+                createHelpBox(widget = widnamelbl, parameter = "name", preview = False)
                 self.widname.insert(0, AppAttr.get("widsetlist")[3]["name"])
 
                 self.overal_lbl.grid(column = 0, row = 0 , pady = 15, sticky = 'w')
-                self.widnamelbl.grid(row = 1, column = 0, columnspan = 2 if self.column_num == 3 else 1, 
+                widnamelbl.grid(row = 1, column = 0, columnspan = 2 if self.column_num == 3 else 1, 
                                      pady = 20, sticky = 'e')
                 self.widname.grid(row = 1, column = 2 if self.column_num == 3 else 1, 
                                   columnspan = 2 if self.column_num == 3 else 1 , padx = 10, pady = 20)
@@ -240,11 +239,12 @@ class interface(ct.CTk):
                 detail_dico = {"Simple" : (0,1), "Normal" : (1,2), "Complet" : (1,2,3)}
                 
                 #on crée le reste des paramètres, selon le type ( soit une entrée texte, un menu, ou un switch)
+                self.fontvar = ct.StringVar(value = "0")
                 for parameter in AppAttr.get("widinfo")[AppAttr.get("widget_id")]["parameters"]:
-                    
                     if AppAttr.get("widsets")[parameter][1] in detail_dico[self.detail_lvl] :
                         lbl = ct.CTkLabel(self.settings_frame, text = parameter + " :", font=ct.CTkFont(size=12, weight="bold"))
-                        if parameter in ("master"): createHelpBox(widget = lbl, parameter = parameter, preview = False)
+                        if parameter in ("master", "onvalue", "offvalue", "textvariable") or AppAttr.get("widget_id") == "frame": 
+                            createHelpBox(widget = lbl, parameter = parameter, preview = False)
                         else : createHelpBox(widget = lbl, parameter = parameter, preview = True)
                         
                         if parameter in ["font", "hover", "image"]:
@@ -270,22 +270,26 @@ class interface(ct.CTk):
                                 entry.set(AppAttr.get("widsets")[parameter][0])
                         
                         elif parameter == "text":
-                            entry = ct.CTkButton(self.settings_frame, text =  AppAttr.get("langdict")["add_label"][self.language], command = lambda : self.openTextTopLevel())
+                            entry = ct.CTkButton(self.settings_frame, text =  AppAttr.get("langdict")["add_label"][self.language], 
+                                                 command = lambda : self.openTextTopLevel())
                             try : self.text = AppAttr.get("widsetlist")[0]["text"]
                             except : self.text = ""
                         
                         elif parameter == "values" :
-                            entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], command = lambda : self.openValuesTopLevel())
+                            entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], 
+                                                 command = lambda : self.openValuesTopLevel())
                             try : self.values = AppAttr.get("widsetlist")[0]["values"]
                             except : self.values = []
 
                         elif parameter == "command" :
-                            entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], command = lambda : self.openCommandTopLevel())
+                            entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], 
+                                                 command = lambda : self.openCommandTopLevel())
                             try : self.command = AppAttr.get("widsetlist")[0]["command"]
                             except : self.command = None
                         
                         elif parameter == "variable" :
-                            entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], command = lambda : self.openVariableTopLevel())
+                            entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], 
+                                                 command = lambda : self.openVariableTopLevel())
                             try : self.variable = AppAttr.get("widsetlist")[0]["variable"]
                             except : self.variable = None
 
@@ -305,8 +309,10 @@ class interface(ct.CTk):
                         column = column + 1 if column < self.column_num else 0
                         row += 1 if column == 0 else 0
 
-                self.layoutlbl = ct.CTkLabel(self.settings_frame, text = "affichage du widget : ", font=ct.CTkFont(size=15, weight="bold") )
-                self.layout = ct.CTkSegmentedButton(self.settings_frame, font=ct.CTkFont(size=15, weight="bold"), values = ["pack", "grid"], 
+                self.layoutlbl = ct.CTkLabel(self.settings_frame, 
+                                             text = "affichage du widget : ", font=ct.CTkFont(size=15, weight="bold") )
+                self.layout = ct.CTkSegmentedButton(self.settings_frame, 
+                                                    font=ct.CTkFont(size=15, weight="bold"), values = ["pack", "grid"], 
                                                      command = self.showLayoutFrame)
                 self.layout.set(AppAttr.get("widsetlist")[3]["layout"]) if AppAttr.get("widsetlist")[3]["layout"] != None else None
                 self.layoutlbl.grid(row = row +1, column = 0)
@@ -479,7 +485,7 @@ class interface(ct.CTk):
 
                 self.stickylbl = ct.CTkLabel(self.layout_frame, text = "sticky", font=ct.CTkFont(size=15, weight="bold"))
                 self.stickylbl.grid(row = 9, column = 0, padx = 10, pady = 5)
-                self.sticky = ct.CTkOptionMenu(self.layout_frame, values = ["None", 'W', "N", 'S', 'E'])
+                self.sticky = ct.CTkOptionMenu(self.layout_frame, values = ["None", 'w', "n", 's', 'e'])
                 self.sticky.grid(row = 9, column = 1, padx = 10, pady = 5)
                 self.layout_list.append(["sticky", self.sticky, "None"])
 
@@ -493,7 +499,7 @@ class interface(ct.CTk):
 
                 self.anchorlbl = ct.CTkLabel(self.layout_frame, text = "anchor", font=ct.CTkFont(size=15, weight="bold"))
                 self.anchorlbl.grid(row = 6, column = 0, padx = 10, pady = 5)
-                self.anchorentry = ct.CTkOptionMenu(self.layout_frame, values = ["None", 'W', "N", 'S', 'E'])
+                self.anchorentry = ct.CTkOptionMenu(self.layout_frame, values = ["None", 'w', "n", 's', 'e'])
                 self.anchorentry.grid(row = 6, column = 1, padx = 10, pady = 5)
                 self.layout_list.append(["anchor", self.anchorentry, 'None'])
 
@@ -511,13 +517,13 @@ class interface(ct.CTk):
 
                 self.filllbl = ct.CTkLabel(self.layout_frame, text = "fill", font=ct.CTkFont(size=15, weight="bold"))
                 self.filllbl.grid(row = 9, column = 0, padx = 10, pady = 5)
-                self.fill= ct.CTkOptionMenu(self.layout_frame, values = ["None", 'X', 'Y', 'BOTH'])
+                self.fill= ct.CTkOptionMenu(self.layout_frame, values = ["none", 'x', 'y', 'both'])
                 self.fill.grid(row = 9, column = 1, padx = 10, pady = 5)
                 self.layout_list.append(["fill", self.fill, "None"])
 
                 self.sidelbl = ct.CTkLabel(self.layout_frame, text = "side", font=ct.CTkFont(size=15, weight="bold"))
                 self.sidelbl.grid(row = 10, column = 0, padx = 10, pady = 5)
-                self.side= ct.CTkOptionMenu(self.layout_frame, values = ["TOP", "BOTTOM", "LEFT", "RIGHT"])
+                self.side= ct.CTkOptionMenu(self.layout_frame, values = ["top", "bottom", "left", "right"])
                 self.side.grid(row = 10, column = 1, padx = 10, pady = 5)
                 self.layout_list.append(["side", self.side, "TOP"])
 
@@ -627,7 +633,8 @@ class interface(ct.CTk):
                 id_card_dict["layout"] = self.layout.get()
                 for element in self.layout_list :
                     if element[1].get() != element[2] :
-                        if element[0] in ("column", "columnspan", "row", "rowspan") or (element[0] in ("ipadx", "ipady", "padx", "pady") and element[1].get() != "0") :
+                        if (element[0] in ("column", "columnspan", "row", "rowspan") or 
+                        (element[0] in ("ipadx", "ipady", "padx", "pady") and element[1].get() != "0")) :
                             try :
                                 layout_dico[element[0]] = int(element[1].get())
                             except :
@@ -834,7 +841,8 @@ class interface(ct.CTk):
         """
         print(AppAttr.get("saved"))
         if AppAttr.get("saved") == False :
-            quitting = messagebox.askokcancel("Modification non enregistrée", "Voulez-vous quitter l'application ?\ntoute modfication non enregistrée sera perdue")
+            quitting = messagebox.askokcancel("Modification non enregistrée", 
+                                              "Voulez-vous quitter l'application ?\ntoute modfication non enregistrée sera perdue")
             if quitting == True :
                 self.destroy()
                 AppAttr.config("closelogs")
@@ -965,7 +973,7 @@ class interface(ct.CTk):
         if AppAttr.get("project") != None :
             self.title(f"Saturne : {AppAttr.get("project")}")
             init = ProjectReq.initProjectAttrReq()
-            if init == False :
+            if init == False : 
                 messagebox.showwarning("Error", "An error occured while loading the project's data.\n See the logs for more details")
                 self.on_quit()
             self.sideWidgetsUptdating()

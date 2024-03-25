@@ -36,7 +36,7 @@ class AdminApp(ct.CTk):
         corrupt_f = []
         module_list = ['addWidgetTool.py', 'Admin.py', 'appattr.py', 'codeGen.py', 'fileManagemt.py', 'fileOpening.py', 
                        'intermediateLayer.py', 'logsFile.py', 'main.py', 'projectApp.py', 'settingsApp.py',  
-                       'tool_tip.py', 'topLevelWin.py', 'widgetApp.py']
+                       'tool_tip.py', 'topLevelWin.py', 'widgetApp.py', "helpBox.py"]
         log_report = ""
         path = os.getcwd()
         cfiles = os.listdir(path)
@@ -101,7 +101,7 @@ class AdminApp(ct.CTk):
                         if sfiles == "widNmeList.txt" :
                             with open(os.getcwd() + "\\" + dir + "\\" + sfiles, "r", encoding="utf8") as file :
                                 widnmeList = file.read().split(",")
-                                if len(widnmeList) > 1 and widnmeList[0] == "" :
+                                if len(widnmeList) >= 1 and widnmeList[0] == "" :
                                     del widnmeList[0]
                         log_report += f"\n {sfiles} : ok"
                 try :

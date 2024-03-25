@@ -7,7 +7,7 @@ class Logs():
 
     error_level = {"FileExistsError" : "Critical", "FileNotFoundError" : "Critical", "KeyError" : "Issue", "NameError" : "Issue", "TypeError" : "Issue", "SyntaxError" : "Issue", 
                    "ModuleNotFoundError" : "critical", "UnicodeTranslateError" : "Issue", "ValueError" : "Issue", "AttributeError" : "Critical", "JSONDecodeError" : "Critical",
-                   "Exception" : "Undefined", "UnboundLocalError" : "Critical", "TclError" : "Critical"}
+                   "Exception" : "Undefined", "UnboundLocalError" : "Critical", "TclError" : "Critical", "IndexError" : "Issue"}
 
     def __init__(self) -> None:
     

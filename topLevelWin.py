@@ -48,11 +48,13 @@ class TextTopLevelWin(ct.CTkToplevel):
 
 class ValuesTopLevelWin(ct.CTkToplevel):
 
-    def __init__(self, *args, fg_color: str | Tuple[str, str] | None = None, **kwargs):
+    def __init__(self, *args, values, fg_color: str | Tuple[str, str] | None = None, **kwargs):
         super().__init__(*args, fg_color=fg_color, **kwargs)
-
-        try : self.values = deepcopy(AppAttr.get("widsetlist")[0]["values"])
-        except : self.values = []
+        if values :
+            self.values = values
+        else :
+            try : self.values = deepcopy(AppAttr.get("widsetlist")[0]["values"])
+            except : self.values = []
 
         self.weight = "normal" if AppAttr.get("settings")["int_language"] == 2 else "bold"
         self.language = AppAttr.get("settings")["int_language"]
@@ -182,7 +184,7 @@ class CommandTopLevelWin(ct.CTkToplevel):
         self.bind("<Escape>", self.on_quit)
 
 
-    def on_quit(self, event):
+    def on_quit(self, *event):
         self.destroy()
 
  
