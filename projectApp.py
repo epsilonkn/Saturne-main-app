@@ -1,7 +1,7 @@
+#file version 0.2.0
 import customtkinter as ct
 from tkinter import messagebox
 from intermediateLayer import *
-import tool_tip as tl
 from appattr import AppAttr
 
 
@@ -11,7 +11,6 @@ class ProjectApp(ct.CTkToplevel):
         super().__init__()
 
         self.newprojectname = None
-        self.tooltip = AppAttr.get( "settings")["tooltip"]
         self.language = AppAttr.get("settings")["int_language"]
 
         self.char_weight = "normal" if AppAttr.get("settings")["language"] == "日本語" else "bold"
@@ -72,13 +71,9 @@ class ProjectApp(ct.CTkToplevel):
         #-------------------- création des labels -------------------- 
 
         self.prjt_name_lbl = ct.CTkLabel(self.upper_frame, text = AppAttr.get("langdict")["prjt_name_lbl"][self.language], font=ct.CTkFont(size=15, weight=self.char_weight))
-        tl.CreateToolTip(self.prjt_name_lbl , "Nom du projet") if self.tooltip == "Oui" else None
         self.win_name_lbl = ct.CTkLabel(self.upper_frame, text = AppAttr.get("langdict")["win_name_lbl"][self.language], font=ct.CTkFont(size=15, weight=self.char_weight))
-        tl.CreateToolTip(self.win_name_lbl , "Nom de la fenêtre") if self.tooltip == "Oui" else None
         self.win_height_lbl = ct.CTkLabel(self.upper_frame, text = AppAttr.get("langdict")["win_height_lbl"][self.language], font=ct.CTkFont(size=15, weight=self.char_weight))
-        tl.CreateToolTip(self.win_height_lbl , "Hauteur de la fenêtre,\n200 par défaut") if self.tooltip == "Oui" else None
         self.win_width_lbl = ct.CTkLabel(self.upper_frame, text = AppAttr.get("langdict")["win_width_lbl"][self.language], font=ct.CTkFont(size=15, weight=self.char_weight))
-        tl.CreateToolTip(self.win_width_lbl , "Largeur de la fenêtre,\n200 par défaut.") if self.tooltip == "Oui" else None
 
         self.prjt_name_lbl.grid(row = 0, column =0, padx = 10, pady = 10)
         self.win_name_lbl.grid(row = 1, column =0, padx = 10, pady = 10)
@@ -186,6 +181,7 @@ class ProjectApp(ct.CTkToplevel):
     def openProjectInfo(self):
         with open("rssDir" +"\\"+  "prjctNameSave.txt", "r", encoding= 'utf8') as file :
             self.project_info = file.read().split(",")
+            if self.project_info[0] == "" : del self.project_info[0]
         file.close()
 
 

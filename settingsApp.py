@@ -1,6 +1,4 @@
-#fichier pour l'interface de paramètres
-
-from typing import Optional, Tuple, Union
+#file version 0.2.0
 from copy import deepcopy
 import customtkinter as ct 
 import json
@@ -64,15 +62,6 @@ class AppEditing(ct.CTkToplevel):
                                                   AppAttr.get("langdict")["fullscreen_label"][self.language]])
 
 
-        self.get_tooltip_lbl = ct.CTkLabel(self.infotabview.tab(AppAttr.get("langdict")["display_tab"][self.language]), 
-                                           text = AppAttr.get("langdict")["tooltip_label"][self.language], 
-                                           font=ct.CTkFont(size=15, weight=self.char_weight))
-        
-        self.get_tooltip = ct.CTkSegmentedButton(self.infotabview.tab(AppAttr.get("langdict")["display_tab"][self.language]), 
-                                                 values = [AppAttr.get("langdict")["yes_option"][self.language], 
-                                                           AppAttr.get("langdict")["no_option"][self.language]])
-
-
         self.affichage_lbl.grid(row = 0, column =0, columnspan = 2, pady = 10, sticky = 'w')
         self.sub_res_frame.grid(row = 1, column =0, columnspan = 2, pady = 10, sticky = 'w')
 
@@ -84,8 +73,6 @@ class AppEditing(ct.CTkToplevel):
         self.displaylbl.grid(row = 2, column = 0, padx = 10, pady = 10, sticky = 'w')
         self.display.grid( row = 2, column = 1, padx = 10, pady = 10, sticky = 'w')
 
-        self.get_tooltip_lbl.grid(row = 3, column = 0, padx = 10, pady = 10, sticky = 'w')
-        self.get_tooltip.grid(row = 3, column = 1, padx = 10, pady = 10, ipadx = 15)
 
 
         #-------------------- Création de la fenêtre "Fonctionnement" --------------------
@@ -147,12 +134,6 @@ class AppEditing(ct.CTkToplevel):
             self.screen_height.insert(0, self.parameters["height"])
             self.display.set(self.parameters["display"])
             self.language_choice.set(self.parameters["language"])
-
-            match self.parameters["tooltip"]:
-                case "Oui" :
-                    self.get_tooltip.set(AppAttr.get("langdict")["yes_option"][self.language])
-                case "Non" :
-                    self.get_tooltip.set(AppAttr.get("langdict")["no_option"][self.language])
 
 
             match self.parameters["display"] :
@@ -227,16 +208,6 @@ class AppEditing(ct.CTkToplevel):
         except any as error :
             print(error)
             messagebox.showwarning("Erreur de sauvergarde", "Une erreur est survenue le l'enregistrement du plein écran.")
-            return
-        
-        try :
-            if self.get_tooltip.get() in ["yes","Oui", "はい"] :
-                self.parameters["tooltip"] = "Oui" 
-            elif self.get_tooltip.get() in ["No","Non", "いいえ"] :
-                self.parameters["tooltip"] = "Non" 
-        except any as error :
-            print(error)
-            messagebox.showwarning("Erreur de sauvergarde", "Une erreur est survenue lors de la sauvergarde de l'affichage des tooltip.")
             return
 
         try :

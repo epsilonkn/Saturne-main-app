@@ -1,4 +1,4 @@
-#fichier gérant les interactions avec les fichiers de sauvegarde
+#file version 0.2.0
 from fileOpening import *
 from appattr import AppAttr
 from codeGen import CodeGeneration

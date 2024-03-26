@@ -1,6 +1,7 @@
-#fichier créant le code en python
+#file version 0.2.0
 from appattr import AppAttr
-
+import traceback
+from tkinter import messagebox
 
 class CodeGeneration():
 
@@ -79,6 +80,7 @@ class CodeGeneration():
                 elif keys != "font" :
                     if keys in cls.str_sets:
                         sets_seq += f", {keys} = '{values}'"
+                        
                     elif keys == "values" :
                         if len(values) > 0 :
                             sub_seq = "["
@@ -86,8 +88,16 @@ class CodeGeneration():
                                 sub_seq += f"\"{element}\","
                             sub_seq = sub_seq[:-1] + "]"
                             sets_seq += f", {keys} = {sub_seq}"
+
                     elif keys == "command" :
-                        pass
+                        param = ""
+                        if len(values[1]) > 0 :
+                            param += "( "
+                            for subkeys in values[1].keys() :
+                                param += f"{subkeys} = {values[1][subkeys][0]},"
+                            param = param[:-1]
+                            param += " )"
+                        sets_seq += f", {keys} = lambda : {values[0]}{param}"
                     # elif keys == "variable" :
                     #     pass #A FAIRE
                     else :
@@ -129,42 +139,71 @@ class CodeGeneration():
         else : return f"{data[3]["name"]}.pack()"
 
 
+    def _cCC(command):
+        seq = f"def {command[0]}("
+        if len(command[1]) > 0 :
+            for element in command[1].keys():
+                seq += f" {element} : {command[1][element][1]},"
+            seq = seq[:-1]
+        seq += "):"
+        return seq
+
+
     @classmethod
     def mWidCode(cls):
-        indices = AppAttr.get("indices")
-        code = AppAttr.get("code_list")
-        old_widcode = AppAttr.get("widsetlist")
-        print(indices)
-        new_widlist = AppAttr.get("prjtwidsetslist")[AppAttr.get("widget")[1]]
-        new_widcode = cls.createWidCode(data = new_widlist)
+        try :
+            indices = AppAttr.get("indices")
+            code = AppAttr.get("code_list")
+            old_widcode = AppAttr.get("widsetlist")
+            new_widlist = AppAttr.get("prjtwidsetslist")[AppAttr.get("widget")[1]]
+            new_widcode = cls.createWidCode(data = new_widlist)
 
 
-        if old_widcode[3]["initcode"] in code :
-            code.insert(code.index(old_widcode[3]["initcode"]), new_widcode[0])
-            del code[code.index(old_widcode[3]["initcode"])]
-        else :
-            if AppAttr.get("widget_id") == "frame" :
-                code.insert(indices["frame_ind"], new_widcode[0])
+            if old_widcode[3]["initcode"] in code :
+                code.insert(code.index(old_widcode[3]["initcode"]), new_widcode[0])
+                del code[code.index(old_widcode[3]["initcode"])]
             else :
-                code.append(new_widcode[0])
+                if AppAttr.get("widget_id") == "frame" :
+                    code.insert(indices["frame_ind"], new_widcode[0])
+                else :
+                    code.append(new_widcode[0])
 
-        if old_widcode[3]["layoutcode"] in code :
-            code.insert(code.index(old_widcode[3]["layoutcode"]), new_widcode[1])
-            del code[code.index(old_widcode[3]["layoutcode"])]
-        else :
-            if AppAttr.get("widget_id") == "frame" :
-                code.insert(indices["frame_ind"]+1, new_widcode[1])
-                code.insert(indices["frame_ind"]+2, "\n")
-                indices["frame_ind"] = indices["frame_ind"] +3
+            if old_widcode[3]["layoutcode"] in code :
+                code.insert(code.index(old_widcode[3]["layoutcode"]), new_widcode[1])
+                del code[code.index(old_widcode[3]["layoutcode"])]
             else :
-                code.append(new_widcode[1])
+                if AppAttr.get("widget_id") == "frame" :
+                    code.insert(indices["frame_ind"]+1, new_widcode[1])
+                    code.insert(indices["frame_ind"]+2, "\n")
+                    indices["frame_ind"] = indices["frame_ind"] +3
+                else :
+                    code.append(new_widcode[1])
 
-        if AppAttr.get("widget")[0] != AppAttr.get("widget")[1] :
-            for lines in code :
-                if lines != new_widcode[0] and lines != new_widcode[1] :
-                    code[code.index(lines)] = lines.replace(AppAttr.get("widget")[0], AppAttr.get("widget")[1])
+            if AppAttr.get("widget")[0] != AppAttr.get("widget")[1] :
+                for lines in code :
+                    if lines != new_widcode[0] and lines != new_widcode[1] :
+                        code[code.index(lines)] = lines.replace(AppAttr.get("widget")[0], AppAttr.get("widget")[1])
 
-        try : 
+            
+            if "command" in new_widlist[0].keys() and "command" not in old_widcode[0].keys() :
+                seq = cls._cCC(new_widlist[0]["command"])
+                code.insert(indices["funct_ind"], seq)
+                code.insert(indices["funct_ind"] + 1, "\n\tpass\n")
+                code.insert(indices["funct_ind"] + 2, "\n")
+                indices["funct_ind"] = indices["funct_ind"] + 3
+                indices["frame_ind"] = indices["frame_ind"] + 3
+            elif "command" in old_widcode[0].keys() and "command" not in new_widlist[0].keys() :
+                seq = cls._cCC(old_widcode[0]["command"])
+                del code[code.index(seq):code.index(seq)+3]
+                indices["funct_ind"] = indices["funct_ind"] + 3
+                indices["frame_ind"] = indices["frame_ind"] + 3
+            elif "command" in old_widcode[0].keys() and "command" in new_widlist[0].keys() :
+                old_seq = cls._cCC(old_widcode[0]["command"])
+                new_seq = cls._cCC(new_widlist[0]["command"])
+                code.insert(code.index(old_seq), new_seq)
+                del code[code.index(old_seq)]
+
+
             if "variable" in new_widlist[0].keys() and "variable" not in old_widcode[0].keys() :
                 code.insert(indices["var_ind"], f"{new_widlist[0]["variable"]} = None\n")
                 indices["var_ind"] = indices["var_ind"] + 1
@@ -178,25 +217,45 @@ class CodeGeneration():
             elif "variable" in old_widcode[0].keys() and "variable" in new_widlist[0].keys() :
                 code.insert(code.index(f"{old_widcode[0]["variable"]} = None\n"), f"{new_widlist[0]["variable"]} = None\n")
                 del code[code.index(f"{old_widcode[0]["variable"]} = None\n")]
-        except Exception as error :
-            print(error)
 
-        data = AppAttr.get("prjtwidsetslist")
-        for  dico in data.values() :
-            if dico[3]["master"] == AppAttr.get("widget")[0]:
-                dico[3]["master"] = AppAttr.get("widget")[1]
-        subdata = data[AppAttr.get("widget")[1]]
-        subdata[3]["initcode"] = new_widcode[0]
-        subdata[3]["layoutcode"] = new_widcode[1]
-        data[AppAttr.get("widget")[1]] = subdata
-        AppAttr.config("prjtwidsetslist", data)
-        AppAttr.config("widsetlist", subdata)
-        AppAttr.config("widget", AppAttr.get("widget")[1])
+            if "textvariable" in new_widlist[0].keys() and "textvariable" not in old_widcode[0].keys() :
+                code.insert(indices["var_ind"], f"{new_widlist[0]["textvariable"]} = customtkinter.StringVar()\n")
+                indices["var_ind"] = indices["var_ind"] + 1
+                indices["funct_ind"] = indices["funct_ind"] + 1
+                indices["frame_ind"] = indices["frame_ind"] + 1
+            elif "textvariable" in old_widcode[0].keys() and "textvariable" not in new_widlist[0].keys() :
+                del code[code.index(f"{old_widcode[0]["textvariable"]} = customtkinter.StringVar()\n")]
+                indices["var_ind"] = indices["var_ind"] - 1
+                indices["funct_ind"] = indices["funct_ind"] - 1
+                indices["frame_ind"] = indices["frame_ind"] - 1
+            elif "textvariable" in old_widcode[0].keys() and "textvariable" in new_widlist[0].keys() :
+                code.insert(code.index(f"{old_widcode[0]["textvariable"]} = customtkinter.StringVar()\n"), f"{new_widlist[0]["textvariable"]} = customtkinter.StringVar()\n")
+                del code[code.index(f"{old_widcode[0]["textvariable"]} = customtkinter.StringVar()\n")]
 
-        if code.index(new_widcode[1]) == len(code) -1 :
-            code.append("\n")
 
-        AppAttr.config("code_list", code)
+            data = AppAttr.get("prjtwidsetslist")
+            for  dico in data.values() :
+                if dico[3]["master"] == AppAttr.get("widget")[0]:
+                    dico[3]["master"] = AppAttr.get("widget")[1]
+            subdata = data[AppAttr.get("widget")[1]]
+            subdata[3]["initcode"] = new_widcode[0]
+            subdata[3]["layoutcode"] = new_widcode[1]
+            data[AppAttr.get("widget")[1]] = subdata
+            AppAttr.config("prjtwidsetslist", data)
+            AppAttr.config("widsetlist", subdata)
+            AppAttr.config("widget", AppAttr.get("widget")[1])
+
+            if code.index(new_widcode[1]) == len(code) -1 :
+                code.append("\n")
+
+            AppAttr.config("code_list", code)
+        except Exception as error:
+            error_level = AppAttr.getErrorlevel(error)
+            with open("rssDir"+ "\\" +"logs.txt", "a", encoding= 'utf8') as log:
+                log.write(f"\n An error Occured | level : {error_level}\n")
+                traceback.print_exc(file = log)
+            messagebox.showwarning("Generation Error", "Module : codeGen | Function : mWidCode\nAn error occured while generating the code.\nSee the logs for more details")
+            return False
 
 
     def delWidCode(cls):

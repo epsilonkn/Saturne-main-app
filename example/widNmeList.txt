@@ -1,1 +1,0 @@
-,entry,button,checkbox,verif_label,label,action_frame,label_frame,sub_frame

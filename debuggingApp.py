@@ -1,3 +1,4 @@
+#file version 0.2.0
 from typing import Tuple
 import os
 import json
@@ -34,9 +35,9 @@ class AdminApp(ct.CTk):
     def verifyFiles():
         missing_f = []
         corrupt_f = []
-        module_list = ['addWidgetTool.py', 'Admin.py', 'appattr.py', 'codeGen.py', 'fileManagemt.py', 'fileOpening.py', 
-                       'intermediateLayer.py', 'logsFile.py', 'main.py', 'projectApp.py', 'settingsApp.py',  
-                       'tool_tip.py', 'topLevelWin.py', 'widgetApp.py', "helpBox.py"]
+        module_list = ['addWidgetTool.py', 'debuggingApp.py', 'appattr.py', 'codeGen.py', 'fileManagemt.py', 'fileOpening.py', 
+                       'intermediateLayer.py', 'logsFile.py', 'main.py', 'projectApp.py', 'settingsApp.py', 'topLevelWin.py', 
+                       'widgetApp.py', "helpBox.py"]
         log_report = ""
         path = os.getcwd()
         cfiles = os.listdir(path)

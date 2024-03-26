@@ -1,6 +1,4 @@
-#fichier contenant les widgets à créer
-#modifier la manière dont est construite l'interface
-from typing import Optional, Tuple, Union
+#file version 0.2.0
 import customtkinter as ct
 import json
 from appattr import AppAttr

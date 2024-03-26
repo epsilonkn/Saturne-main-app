@@ -1,4 +1,4 @@
-#fichier gérant les interactions entre l'interface et les fichiers fonctionnels
+#file version 0.2.0
 from fileOpening import *
 from fileManagemt import *
 from codeGen import CodeGeneration
@@ -156,7 +156,7 @@ class WidgetReq():
         """modifyWidSetReq 
         Envoie une requête de modification des paramètres d'un widget créé par l'utilisateur
         """
-        cache = ("<modify>", AppAttr.get("widget")[0], AppAttr.get("widget")[1], AppAttr.get("widsetlist")[::], AppAttr.get("code_list")[::])
+        cache = ("<modify>", AppAttr.get("widget")[0], AppAttr.get("widget")[1], deepcopy(AppAttr.get("widsetlist")), deepcopy(AppAttr.get("code_list")), deepcopy(AppAttr.get("indices")))
         CacheReq.addToCache(cache)
         CodeGeneration.mWidCode()
 
@@ -176,7 +176,7 @@ class WidgetReq():
         code = AppAttr.get("code_list")[::]
         CodeGeneration.delWidCode(CodeGeneration)
         cache = ("<delete>", AppAttr.get("widget"), deepcopy(AppAttr.get("prjtwidsetslist")[AppAttr.get("widget")]),
-                 AppAttr.get("widnamelist")[::], code)
+                 AppAttr.get("widnamelist")[::], code, deepcopy(AppAttr.get("indices")))
         CacheReq.addToCache(cache)
 
 
@@ -288,23 +288,25 @@ class CacheReq():
                     AppAttr.config("redo_cache")
                     AppAttr.config("widget", None) if AppAttr.get("widget") == last_element[1] else None
                 case "<delete>":
-                    aux_cache.append(("<RedoDelete>", last_element[1], deepcopy(AppAttr.get("code_list"))))
+                    aux_cache.append(("<RedoDelete>", last_element[1], deepcopy(AppAttr.get("code_list")), deepcopy(AppAttr.get("indices"))))
                     AppAttr.config("widnamelist", last_element[3])
                     widsetlist = AppAttr.get("prjtwidsetslist") 
                     widsetlist[last_element[1]] = last_element[2]
                     AppAttr.config("code_list", last_element[4])
                     del cache[-1]
                     AppAttr.config("cache")
+                    AppAttr.config("indices", last_element[5])
                     AppAttr.config("redo_cache")
                     AppAttr.config("widget", last_element[1]) if AppAttr.get("widget") == None else None
                 case "<modify>":
-                    aux_cache.append(("<RedoModify>",last_element[1], last_element[2], AppAttr.get("widsetlist")[::], AppAttr.get("code_list")[::]))
+                    aux_cache.append(("<RedoModify>",last_element[1], last_element[2], deepcopy(AppAttr.get("widsetlist")), deepcopy(AppAttr.get("code_list")), deepcopy(AppAttr.get("indices"))))
                     widnamelist = AppAttr.get("widnamelist")
                     widnamelist.insert(widnamelist.index(last_element[2]), last_element[1])
                     del widnamelist[widnamelist.index(last_element[2])]
                     widsetlist = AppAttr.get("prjtwidsetslist")
                     del widsetlist[last_element[2]]
                     widsetlist[last_element[1]] = last_element[3]
+                    AppAttr.config("indices", last_element[5])
                     AppAttr.config("code_list", last_element[4])
                     AppAttr.config("widget", last_element[1]) if AppAttr.get("widget") == last_element[2] else None
                     del cache[-1]
@@ -333,7 +335,7 @@ class CacheReq():
                     AppAttr.config("redo_cache")
                 case "<RedoDelete>":
                     CacheReq.addToCache(("<delete>", last_element[1], deepcopy(AppAttr.get("prjtwidsetslist")[last_element[1]]), 
-                                         AppAttr.get("widnamelist")[::], deepcopy(AppAttr.get("code_list"))))
+                                         AppAttr.get("widnamelist")[::], deepcopy(AppAttr.get("code_list")), deepcopy(AppAttr.get("indices"))))
                     widnamelist = AppAttr.get("widnamelist")
                     del widnamelist[widnamelist.index(last_element[1])]
                     widsetlist = AppAttr.get("prjtwidsetslist")
@@ -342,10 +344,11 @@ class CacheReq():
                     AppAttr.config("widget", None) if AppAttr.get("widget") == last_element[1] else None
                     del aux_cache[-1]
                     AppAttr.config("cache")
+                    AppAttr.config("indices", last_element[3])
                     AppAttr.config("redo_cache")
                 case "<RedoModify>" :
                     CacheReq.addToCache(("<modify>", last_element[1],last_element[2] , deepcopy(AppAttr.get("prjtwidsetslist")[last_element[2]]), 
-                                        deepcopy(AppAttr.get("code_list"))))
+                                        deepcopy(AppAttr.get("code_list")), deepcopy(AppAttr.get("indices"))))
                     widnamelist = AppAttr.get("widnamelist")
                     widnamelist.insert(widnamelist.index(last_element[1]), last_element[2])
                     del widnamelist[widnamelist.index(last_element[1])]
@@ -353,6 +356,7 @@ class CacheReq():
                     del widsetlist[last_element[1]]
                     widsetlist[last_element[2]] = last_element[3]
                     AppAttr.config("code_list", last_element[4])
+                    AppAttr.config("indices", last_element[5])
                     AppAttr.config("widget", last_element[2]) if AppAttr.get("widget") != last_element[2] else None
                     del aux_cache[-1]
                     AppAttr.config("cache")

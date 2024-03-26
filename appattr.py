@@ -1,3 +1,4 @@
+#file version 0.2.0
 import json
 from logsFile import Logs
 from typing import *
@@ -14,24 +15,17 @@ class AppAttr():
     -getErrorlevel
     """
 
-    _win_settings = {}
-    _widsetlist = []
-    _widget_name_list = []
-    _project_wid_sets_list = {}
-    _cache = []
+    _lang_dict =_code_indices =_project_wid_sets_list =_win_settings = {}
+
     _redo_cache = []
-    _widsets = None
-    _widinfo = None
-    _lang_dict = {}
-    _saved = True
     _code_list = []
-    _code = None
-    _lang_choice = None
-    _project = None
-    _widget = None
-    _widget_id = None
-    _logs = None
-    _code_indices = {}
+    _cache =[]
+    _widget_name_list = []
+    _widsetlist = []
+
+    _widsets = _widinfo = _code = _lang_choice = _project = _widget = _widget_id = _logs = None
+    
+    _saved = True
 
     print("AppAttr loaded")
 

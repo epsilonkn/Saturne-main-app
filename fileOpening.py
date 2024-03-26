@@ -1,4 +1,4 @@
-#programme d'ouvertures des dossiers
+#file version 0.2.0
 from typing import *
 import os
 import json

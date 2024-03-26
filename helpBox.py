@@ -1,4 +1,4 @@
-from typing import Tuple
+#file version 0.2.0
 import customtkinter as ct
 from appattr import *
 from topLevelWin import ValuesTopLevelWin
@@ -136,8 +136,6 @@ class HelpBox(object):
                     widget.configure(checkbox_height=val)
                 case "variable":
                     widget.configure(variable=val)
-                case "dropdown_font":
-                    widget.configure(dropdown_font=val)
                 case "button_color":
                     widget.configure(button_color=val)
                 case "button_hover_color":
@@ -166,6 +164,8 @@ class HelpBox(object):
                     widget.configure(hover_color=val)
                 case "checkmark_color":
                     widget.configure(checkmark_color=val)
+                case "text":
+                    widget.configure(text=val)
                 case "values" :
                     try : widget.set(val[0])
                     except : pass

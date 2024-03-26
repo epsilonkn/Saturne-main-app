@@ -1,8 +1,7 @@
-#fichier contenant l'interface graphique du programme
+#file version 0.2.0
 import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ct
-import tool_tip as tl
 from intermediateLayer import *
 from settingsApp import AppEditing
 from widgetApp import WidgetApp
@@ -44,6 +43,7 @@ class interface(ct.CTk):
         self.bind("<Control-a>", self.widgetAdding)
         self.bind("<Control-m>", self.modifyWid)
         self.bind("<Control-w>", self.delWid)
+
 
     #-------------------- fonctions de création de la fenêtres --------------------
         
@@ -120,17 +120,17 @@ class interface(ct.CTk):
 
 
             self.parameter_button = ct.CTkButton(self.actionbtframe, width= self.width*(10/100), height= self.height*(6/100),
-                                                text = AppAttr.get("langdict")["menuapp2"][self.language], font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.openParameters())
-            tl.CreateToolTip(self.parameter_button, text = "Bouton d'ouverture de la fenêtre de paramètres.") if self.showtooltip == "Oui" else None
+                                                text = AppAttr.get("langdict")["menuapp2"][self.language], 
+                                                font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.openParameters())
 
             self.modify_button = ct.CTkButton(self.actionbtframe,  width= self.width*(10/100), height= self.height*(6/100),
-                                                text = AppAttr.get("langdict")["menuwid3"][self.language], font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.modifyWid())
-            tl.CreateToolTip(self.modify_button, text = "Bouton de modification des paramètres d'un widget.") if self.showtooltip == "Oui" else None
+                                                text = AppAttr.get("langdict")["menuwid3"][self.language], 
+                                                font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.modifyWid())
             self.modify_button.configure(state = "disabled") if AppAttr.get("widget") == None else None
 
             self.delete_button = ct.CTkButton(self.actionbtframe,  width= self.width*(10/100), height= self.height*(6/100),
-                                                text = AppAttr.get("langdict")["menuwid2"][self.language], font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.delWid())
-            tl.CreateToolTip(self.delete_button, text = "Bouton de suppression d'un widget.") if self.showtooltip == "Oui" else None
+                                                text = AppAttr.get("langdict")["menuwid2"][self.language], 
+                                                font=ct.CTkFont(size=15, weight="bold"), corner_radius= 10, command = lambda : self.delWid())
             self.delete_button.configure(state = "disabled") if AppAttr.get("widget") == None else None
 
 
@@ -173,7 +173,6 @@ class interface(ct.CTk):
                                        border_width= 2, border_color = "#FFFFFF",font=ct.CTkFont(size=15, weight="bold"), 
                                        corner_radius= 10, command= lambda : self.widgetAdding())
        
-        tl.CreateToolTip(self.add_button, text = "Bouton d'ajout de widgets dans le projet.") if self.showtooltip == "Oui" else None
         self.add_button.configure(state = "disabled") if AppAttr.get("project") == None else None
         self.add_button.grid(padx = 5, pady = 5)
 
@@ -243,19 +242,24 @@ class interface(ct.CTk):
                 for parameter in AppAttr.get("widinfo")[AppAttr.get("widget_id")]["parameters"]:
                     if AppAttr.get("widsets")[parameter][1] in detail_dico[self.detail_lvl] :
                         lbl = ct.CTkLabel(self.settings_frame, text = parameter + " :", font=ct.CTkFont(size=12, weight="bold"))
-                        if parameter in ("master", "onvalue", "offvalue", "textvariable") or AppAttr.get("widget_id") == "frame": 
+                        if parameter in ("master", "onvalue", "offvalue", "textvariable", "variable", "command") or AppAttr.get("widget_id") == "frame": 
                             createHelpBox(widget = lbl, parameter = parameter, preview = False)
                         else : createHelpBox(widget = lbl, parameter = parameter, preview = True)
                         
-                        if parameter in ["font", "hover", "image"]:
+                        if parameter in ["font", "hover", "image", "dropdown_font"]:
                             entry = ct.CTkSwitch(self.settings_frame, text = "", onvalue="1", offvalue="0", switch_width= 48,switch_height= 18)
                             if parameter in AppAttr.get("widsetlist")[0].keys() :
-                                entry.select() if AppAttr.get("widsetlist")[0][parameter] == '1' else None
+                                entry.select() if AppAttr.get("widsetlist")[0][parameter] == '1'  else None
                             if parameter == "font" : 
                                 try : self.fontvar= ct.StringVar(value = AppAttr.get("widsetlist")[0][parameter])
                                 except : self.fontvar = ct.StringVar(value = "0")
                                 entry.configure(command = lambda : self.showFontFrame(), variable = self.fontvar)
-                            if parameter == "image" :
+                            elif parameter == "image" :
+                                entry.configure(state = "disabled")
+                            elif parameter == "hover" :
+                                try : entry.select() if AppAttr.get("widsetlist")[0][parameter] == "True" else None
+                                except : entry.select()
+                            elif parameter == "dropdown_font" :
                                 entry.configure(state = "disabled")
                             
                         elif parameter == "master" :
@@ -285,13 +289,26 @@ class interface(ct.CTk):
                             entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], 
                                                  command = lambda : self.openCommandTopLevel())
                             try : self.command = AppAttr.get("widsetlist")[0]["command"]
-                            except : self.command = None
+                            except : self.command = ["", {}]
                         
                         elif parameter == "variable" :
                             entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], 
-                                                 command = lambda : self.openVariableTopLevel())
+                                                 command = lambda x = parameter : self.openVariableTopLevel(x))
                             try : self.variable = AppAttr.get("widsetlist")[0]["variable"]
                             except : self.variable = None
+
+                        elif parameter == "textvariable" :
+                            entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], 
+                                                 command = lambda x = parameter : self.openVariableTopLevel(x))
+                            try : self.textvariable = AppAttr.get("widsetlist")[0]["textvariable"]
+                            except : self.textvariable = None
+
+                        elif parameter in ["width", "height"] :
+                            entry = ct.CTkEntry(self.settings_frame, width = 100,font=ct.CTkFont(weight="bold"))
+                            if parameter not in AppAttr.get("widsetlist")[0].keys() :
+                                entry.insert(0, "Default")
+                            else :
+                                entry.insert(0, AppAttr.get("widsetlist")[0][parameter])
 
                         else :
                             entry = ct.CTkEntry(self.settings_frame, width = 100,font=ct.CTkFont(weight="bold"))
@@ -360,37 +377,31 @@ class interface(ct.CTk):
 
                 self.familylbl = ct.CTkLabel(self.font_frame , text = "Family : ", font=ct.CTkFont(size=15, weight="bold") )
                 self.family = ct.CTkEntry(self.font_frame, width = 100,font=ct.CTkFont(weight="bold"))
-                tl.CreateToolTip(self.familylbl,"Nom de la police") if self.showtooltip == "Oui" else None
                 self.familylbl.grid(row = 1, column = 0, padx = 10, pady = 5)
                 self.family.grid(row = 1, column = 1, padx = 10, pady = 5)
 
                 self.fontsizelbl = ct.CTkLabel(self.font_frame , text = "Size : ", font=ct.CTkFont(size=15, weight="bold") )
                 self.fontsize =ct.CTkEntry(self.font_frame, width = 100,font=ct.CTkFont(weight="bold"))
-                tl.CreateToolTip(self.fontsizelbl,"Taille du texte") if self.showtooltip == "Oui" else None
                 self.fontsizelbl.grid(row = 2, column = 0, padx = 10, pady = 5)
                 self.fontsize.grid(row = 2, column = 1, padx = 10, pady = 5)
 
                 self.fontweightlbl = ct.CTkLabel(self.font_frame , text = "Weight : ", font=ct.CTkFont(size=15, weight="bold") )
                 self.fontweight = ct.CTkOptionMenu(self.font_frame, values = ["normal", "bold"])
-                tl.CreateToolTip(self.fontweightlbl,"Mise en Gras du texte ( bold ), normal sinon") if self.showtooltip == "Oui" else None
                 self.fontweightlbl.grid(row = 3, column = 0, padx = 10, pady = 5)
                 self.fontweight.grid(row = 3, column = 1, padx = 10, pady = 5)
 
                 self.slantlbl = ct.CTkLabel(self.font_frame , text = "Slant : ", font=ct.CTkFont(size=15, weight="bold") )
                 self.slant = ct.CTkOptionMenu(self.font_frame, values = ["roman", "italic"])
-                tl.CreateToolTip(self.slantlbl,"Mise en italique du texte ( italic), roman sinon") if self.showtooltip == "Oui" else None
                 self.slantlbl.grid(row = 4, column = 0, padx = 10, pady = 5)
                 self.slant.grid(row = 4, column = 1, padx = 10, pady = 5)
 
                 self.underlinelbl = ct.CTkLabel(self.font_frame , text = "Underline : ", font=ct.CTkFont(size=15, weight="bold") )
                 self.underline = ct.CTkSwitch(self.font_frame, text = "", onvalue="1", offvalue="0", switch_width= 48,switch_height= 18)
-                tl.CreateToolTip(self.underlinelbl,"Soulignage du texte") if self.showtooltip == "Oui" else None
                 self.underlinelbl.grid(row = 5, column = 0, padx = 10, pady = 5)
                 self.underline.grid(row = 5, column = 1, padx = 10, pady = 5)
         
                 self.overstrikelbl = ct.CTkLabel(self.font_frame , text = "Overstrike : ", font=ct.CTkFont(size=15, weight="bold") )
                 self.overstrike = ct.CTkSwitch(self.font_frame, text = "", onvalue="1", offvalue="0", switch_width= 48,switch_height= 18)
-                tl.CreateToolTip(self.overstrikelbl,"Raturage du texte") if self.showtooltip == "Oui" else None
                 self.overstrikelbl.grid(row = 6, column = 0, padx = 10, pady = 5)
                 self.overstrike.grid(row = 6, column = 1, padx = 10, pady = 5)
 
@@ -517,7 +528,7 @@ class interface(ct.CTk):
 
                 self.filllbl = ct.CTkLabel(self.layout_frame, text = "fill", font=ct.CTkFont(size=15, weight="bold"))
                 self.filllbl.grid(row = 9, column = 0, padx = 10, pady = 5)
-                self.fill= ct.CTkOptionMenu(self.layout_frame, values = ["none", 'x', 'y', 'both'])
+                self.fill= ct.CTkOptionMenu(self.layout_frame, values = ["None", 'x', 'y', 'both'])
                 self.fill.grid(row = 9, column = 1, padx = 10, pady = 5)
                 self.layout_list.append(["fill", self.fill, "None"])
 
@@ -525,7 +536,7 @@ class interface(ct.CTk):
                 self.sidelbl.grid(row = 10, column = 0, padx = 10, pady = 5)
                 self.side= ct.CTkOptionMenu(self.layout_frame, values = ["top", "bottom", "left", "right"])
                 self.side.grid(row = 10, column = 1, padx = 10, pady = 5)
-                self.layout_list.append(["side", self.side, "TOP"])
+                self.layout_list.append(["side", self.side, "top"])
 
 
             for element in self.layout_list :
@@ -648,7 +659,8 @@ class interface(ct.CTk):
             for element in self.actual_sets :
                 
                 if element[1] in ["width", "height"] :
-                    dico[element[1]] = int(element[0].get())
+                    if element[0].get() != "Default" :
+                        dico[element[1]] = int(element[0].get())
                     
                 #on s'occupe des paramètres de font
                 elif element[1] == "font" :
@@ -710,10 +722,17 @@ class interface(ct.CTk):
                         dico[element[1]] = self.values
 
                 elif element[1] == "command" :
-                    dico[element[1]] = self.command
+                    if self.command[0] != "" :
+                        dico[element[1]] = self.command
 
                 elif element[1] == "variable" :
-                    dico[element[1]] = self.variable
+                    if self.variable not in [None, ""] :
+                        dico[element[1]] = self.variable
+
+                elif element[1] == "textvariable" :
+                    if self.textvariable not in [None, ""] :
+                        dico[element[1]] = self.textvariable
+
                 else : 
                     if element[0].get() != AppAttr.get("widsets")[element[1]][0] :
                         dico[element[1]] = element[0].get()
@@ -771,7 +790,6 @@ class interface(ct.CTk):
 
             getGeometry()
             
-            self.showtooltip = AppAttr.get( "settings")["tooltip"]
             self.detail_lvl  = AppAttr.get( "settings")["detail"]
             self.language = AppAttr.get("settings")["int_language"]
 
@@ -912,13 +930,13 @@ class interface(ct.CTk):
         self.widgetParametersFrame(AppAttr.get("widget"))
 
 
-#-------------------- fonctions de création de fenêtres enfant --------------------
+    #-------------------- fonctions de création de fenêtres enfant --------------------
     
 
     def openTextTopLevel(self):
         if self.app != None :
             return
-        self.app = TextTopLevelWin()
+        self.app = TextTopLevelWin(self.text)
         self.app.grab_set()
         self.text = self.app.contentGet()
         self.app = None
@@ -927,7 +945,7 @@ class interface(ct.CTk):
     def openValuesTopLevel(self):
         if self.app != None :
             return
-        self.app = ValuesTopLevelWin()
+        self.app = ValuesTopLevelWin(values = self.values)
         self.app.grab_set()
         self.values = self.app.contentGet()
         self.app = None
@@ -936,18 +954,19 @@ class interface(ct.CTk):
     def openCommandTopLevel(self):
         if self.app != None :
             return
-        self.app = CommandTopLevelWin()
+        self.app = CommandTopLevelWin(values = self.command)
         self.app.grab_set()
         self.command = self.app.contentGet()
         self.app = None
 
 
-    def openVariableTopLevel(self):
+    def openVariableTopLevel(self, var):
         if self.app != None :
             return
         self.app = VariableTopLevelWin()
         self.app.grab_set()
-        self.variable = self.app.contentGet()
+        if var == "variable" : self.variable = self.app.contentGet()
+        else : self.textvariable = self.app.contentGet()
         self.app = None
 
 
