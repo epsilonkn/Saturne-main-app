@@ -313,8 +313,8 @@ class CommandTopLevelWin(ct.CTkToplevel):
 
 class VariableTopLevelWin(ct.CTkToplevel):
 
-    def __init__(self, *args, fg_color: str | Tuple[str, str] | None = None, **kwargs):
-        super().__init__(*args, fg_color=fg_color, **kwargs)
+    def __init__(self, texte : str):
+        super().__init__()
 
         self.choice = ""
         self.weight = "normal" if AppAttr.get("settings")["int_language"] == 2 else "bold"
@@ -322,7 +322,7 @@ class VariableTopLevelWin(ct.CTkToplevel):
 
         self.label = ct.CTkLabel(self, text = AppAttr.get("langdict")["variable_label"][self.language], font= ct.CTkFont(family = "arial", size=25, weight=self.weight))
         self.text_input = ct.CTkEntry(self, height= 30, width=250, font= ct.CTkFont(family = "arial", size=12, weight=self.weight))
-        try : self.text_input.insert(0, AppAttr.get("widsetlist")[0]["variable"])
+        try : self.text_input.insert(0, texte)
         except : pass
         self.validate_bt = ct.CTkButton(self, text = AppAttr.get("langdict")["content_valid_bt"][self.language], font= ct.CTkFont(family = "arial", size=15, weight=self.weight), width= 100, command = lambda : self.contentValidation())
         self.cancel_bt = ct.CTkButton(self, text = AppAttr.get("langdict")["cancel_btn"][self.language], font= ct.CTkFont(family = "arial", size=15, weight=self.weight), width= 100, command = lambda : self.on_quit())
@@ -341,8 +341,12 @@ class VariableTopLevelWin(ct.CTkToplevel):
 
 
     def contentValidation(self):
-        if ControlReq.tryWN(self.text_input.get()) :
-            self.choice = self.text_input.get()
+        var = self.text_input.get()
+        if var == "" :
+            self.choice = ""
+            self.destroy()
+        elif ControlReq.tryWN(var) :
+            self.choice = var
             self.destroy()
         else : 
             messagebox.showerror("Erreur d'entrée", "Le nom de variable ne correspond pas aux attentes de Python")

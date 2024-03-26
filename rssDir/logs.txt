@@ -295,3 +295,423 @@ optionmenu2.pack()
  2024-03-26 18:41:03.157089 | actual widget opened : optionmenu2
 
  session closed
+
+2024-03-26 20:02:32.913749 | New session started
+
+
+ 2024-03-26 20:02:34.623685 | new project : test
+
+ 2024-03-26 20:02:36.999161 | new project : None
+
+ 2024-03-26 20:02:37.840160 | new project : example
+
+ 2024-03-26 20:02:38.792154 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:02:47.398617 | actual widget opened : checkbox
+
+ 2024-03-26 20:02:47.414036 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:02:47.414036 | actual widget's ID : checkbox
+
+ session closed
+
+2024-03-26 20:05:22.556308 | New session started
+
+
+ 2024-03-26 20:05:24.772942 | new project : None
+
+ 2024-03-26 20:05:24.772942 | widget name list : []
+
+ 2024-03-26 20:05:24.772942 | actual widget opened : None
+
+ session closed
+
+2024-03-26 20:06:19.391140 | New session started
+
+
+ 2024-03-26 20:06:20.775024 | new project : example
+
+ 2024-03-26 20:06:21.768905 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:06:22.859974 | actual widget opened : checkbox
+
+ 2024-03-26 20:06:22.864313 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:06:22.864313 | actual widget's ID : checkbox
+
+ session closed
+
+2024-03-26 20:06:47.344941 | New session started
+
+
+ 2024-03-26 20:06:49.088198 | new project : example
+
+ 2024-03-26 20:06:50.026870 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:06:51.144773 | actual widget opened : checkbox
+
+ 2024-03-26 20:06:51.144773 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:06:51.144773 | actual widget's ID : checkbox
+
+ session closed
+
+2024-03-26 20:07:51.926338
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\Saturne data\saturne perso\main.py", line 725, in modifyWid
+    if self.command[0] != "" :
+       ~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+
+2024-03-26 20:08:06.634818
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\Saturne data\saturne perso\main.py", line 725, in modifyWid
+    if self.command[0] != "" :
+       ~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+
+2024-03-26 20:07:40.694091 | New session started
+
+
+ 2024-03-26 20:07:41.940097 | new project : example
+
+ 2024-03-26 20:07:43.075366 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:07:44.401259 | actual widget opened : checkbox
+
+ 2024-03-26 20:07:44.411316 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:07:44.411316 | actual widget's ID : checkbox
+
+ session closed
+
+2024-03-26 20:10:20.849758
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\Saturne data\saturne perso\main.py", line 725, in modifyWid
+    if self.command[0] != "" :
+       ~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+
+2024-03-26 20:10:45.308409
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\Saturne data\saturne perso\main.py", line 725, in modifyWid
+    if self.command[0] != "" :
+       ~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+
+2024-03-26 20:11:07.223197
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\Saturne data\saturne perso\main.py", line 725, in modifyWid
+    if self.command[0] != "" :
+       ~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+
+2024-03-26 20:09:52.112919 | New session started
+
+
+ 2024-03-26 20:09:53.565183 | new project : example
+
+ 2024-03-26 20:09:54.493494 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:09:55.432773 | actual widget opened : checkbox
+
+ 2024-03-26 20:09:55.438220 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:09:55.438220 | actual widget's ID : checkbox
+
+ 2024-03-26 20:09:56.690616 | actual cache : [('<delete>', 'checkbox', [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'pad
+ x': 10, 'pady': 10, 'column': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CT
+ kCheckBox(sub_frame, checkbox_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,col
+ umn = 1 ,row = 0 ,sticky = 'E' )\n", 'master': 'sub_frame'}], ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button'], ['impo
+ rt customtkinter\n', '\n', 'window = customtkinter.CTk()\n', '\n', "window.title('interface')\n", '\n', '\n', '#variables\n', '\n', 'checkbox_var = None\n', '\n', '#function
+ s\n', '\n', '\n', '#frames\n', '\n', 'label_frame = customtkinter.CTkFrame(window)\n', "label_frame.pack(fill = 'both' ,side = 'top' )\n", '\n', 'action_frame = customtkinte
+ r.CTkFrame(window)\n', "action_frame.pack(fill = 'both' ,side = 'top' )\n", '\n', 'sub_frame = customtkinter.CTkFrame(window)\n', "sub_frame.pack(fill = 'both' ,side = 'top'
+  )\n", '\n', '\n', '#widgets\n', '\n', "label = customtkinter.CTkLabel(label_frame, text = 'Ceci est un exemple :', font = customtkinter.CTkFont(family = 'Arial' ,size = 20 
+ ,weight = 'bold' ))\n", "label.pack(padx = 10 ,pady = 10 ,side = 'left' )\n", '\n', 'entry = customtkinter.CTkEntry(action_frame, width = 150, height = 30)\n', 'entry.grid(p
+ adx = 10 ,pady = 10 ,column = 0 ,row = 0 )\n', '\n', "button = customtkinter.CTkButton(action_frame, border_spacing = 2, text = 'Valider')\n", 'button.grid(padx = 10 ,pady =
+  10 ,column = 1 ,row = 0 )\n', '\n', "verif_label = customtkinter.CTkLabel(sub_frame, text = 'ne plus afficher', font = customtkinter.CTkFont(family = 'Arial' ,size = 16 ,we
+ ight = 'bold' ))\n", "verif_label.grid(padx = 10 ,pady = 10 ,column = 0 ,row = 0 ,sticky = 'E' )\n", '\n', "checkbox = customtkinter.CTkCheckBox(sub_frame, checkbox_width = 
+ 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky = 'E' )\n", '\n'], {'var_in
+ d': 10, 'funct_ind': 13, 'frame_ind': 25})]
+
+ 2024-03-26 20:09:56.735015 | widget name list : ['', 'entry', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:09:56.735015 | actual widget opened : None
+
+ 2024-03-26 20:09:56.735015 | actual widget's ID : None
+
+ 2024-03-26 20:09:56.735015 | widget settings list : []
+
+ 2024-03-26 20:09:59.397914 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:09:59.397914 | actual cache : []
+
+ 2024-03-26 20:09:59.397914 | actual redo cache : [('<RedoDelete>', 'checkbox', ['import customtkinter\n', '\n', 'window = customtkinter.CTk()\n', '\n', "window.title('interface')\n", '\n', '\n', '#variables\n', '\n', 'checkb
+ ox_var = None\n', '\n', '#functions\n', '\n', '\n', '#frames\n', '\n', 'label_frame = customtkinter.CTkFrame(window)\n', "label_frame.pack(fill = 'both' ,side = 'top' )\n", 
+ '\n', 'action_frame = customtkinter.CTkFrame(window)\n', "action_frame.pack(fill = 'both' ,side = 'top' )\n", '\n', 'sub_frame = customtkinter.CTkFrame(window)\n', "sub_fram
+ e.pack(fill = 'both' ,side = 'top' )\n", '\n', '\n', '#widgets\n', '\n', "label = customtkinter.CTkLabel(label_frame, text = 'Ceci est un exemple :', font = customtkinter.CT
+ kFont(family = 'Arial' ,size = 20 ,weight = 'bold' ))\n", "label.pack(padx = 10 ,pady = 10 ,side = 'left' )\n", '\n', 'entry = customtkinter.CTkEntry(action_frame, width = 1
+ 50, height = 30)\n', 'entry.grid(padx = 10 ,pady = 10 ,column = 0 ,row = 0 )\n', '\n', "button = customtkinter.CTkButton(action_frame, border_spacing = 2, text = 'Valider')\
+ n", 'button.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 )\n', '\n', "verif_label = customtkinter.CTkLabel(sub_frame, text = 'ne plus afficher', font = customtkinter.CTkFo
+ nt(family = 'Arial' ,size = 16 ,weight = 'bold' ))\n", "verif_label.grid(padx = 10 ,pady = 10 ,column = 0 ,row = 0 ,sticky = 'E' )\n", '\n'], {'var_ind': 10, 'funct_ind': 13
+ , 'frame_ind': 25})]
+
+ 2024-03-26 20:09:59.397914 | actual widget opened : checkbox
+
+ 2024-03-26 20:09:59.441282 | actual widget opened : checkbox
+
+ 2024-03-26 20:09:59.447954 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:09:59.447954 | actual widget's ID : checkbox
+
+ 2024-03-26 20:10:36.145401 | window settings : {'width': 1650, 'height': 720, 'color': 'dark-blue', 'theme': 'dark', 'detail': 'Complet', 'display': 'windowed', 'language': 'Français', 'int_language': 1}
+
+ 2024-03-26 20:10:36.145401 | language used : 1
+
+ 2024-03-26 20:10:36.382320 | actual widget opened : checkbox
+
+ 2024-03-26 20:10:36.382320 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:10:36.382320 | actual widget's ID : checkbox
+
+ session closed
+
+2024-03-26 20:13:34.961260
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\Saturne data\saturne perso\main.py", line 725, in modifyWid
+    if self.command[0] != "" :
+       ~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+
+2024-03-26 20:13:18.424379 | New session started
+
+
+ 2024-03-26 20:13:20.103380 | new project : example
+
+ 2024-03-26 20:13:21.097284 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:13:23.144391 | actual widget opened : checkbox
+
+ 2024-03-26 20:13:23.144391 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:13:23.144391 | actual widget's ID : checkbox
+
+ session closed
+
+2024-03-26 20:15:29.439120
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\Saturne data\saturne perso\main.py", line 725, in modifyWid
+    if self.command[0] != "" :
+       ~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+
+2024-03-26 20:15:11.624554 | New session started
+
+
+ 2024-03-26 20:15:13.376097 | new project : example
+
+ 2024-03-26 20:15:14.294823 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:15:15.377427 | actual widget opened : checkbox
+
+ 2024-03-26 20:15:15.390106 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:15:15.390106 | actual widget's ID : checkbox
+
+ session closed
+
+2024-03-26 20:18:20.025982
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\Saturne data\saturne perso\main.py", line 725, in modifyWid
+    if self.command[0] != "" :
+       ~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+
+2024-03-26 20:18:04.637910 | New session started
+
+
+ 2024-03-26 20:18:06.054402 | new project : example
+
+ 2024-03-26 20:18:06.890446 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:18:08.153869 | actual widget opened : checkbox
+
+ 2024-03-26 20:18:08.153869 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:18:08.153869 | actual widget's ID : checkbox
+
+ session closed
+
+2024-03-26 20:23:50.493534
+ An error Occured | level : Issue
+Traceback (most recent call last):
+  File "c:\Users\ywan\Documents\Saturne data\saturne perso\main.py", line 725, in modifyWid
+    if self.command[0] != "" :
+       ~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+
+2024-03-26 20:23:36.405537 | New session started
+
+
+ 2024-03-26 20:23:37.634250 | new project : example
+
+ 2024-03-26 20:23:38.927063 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:23:40.780510 | actual widget opened : checkbox
+
+ 2024-03-26 20:23:40.781025 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'command': None, 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'colum
+ n': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, check
+ box_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky =
+  'E' )\n", 'master': 'sub_frame'}]
+
+ 2024-03-26 20:23:40.781025 | actual widget's ID : checkbox
+
+ session closed
+
+2024-03-26 20:24:49.491516 | New session started
+
+
+ 2024-03-26 20:24:50.866524 | new project : example
+
+ 2024-03-26 20:24:51.896222 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:24:53.100978 | actual widget opened : checkbox
+
+ 2024-03-26 20:24:53.116876 | widget settings list : [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'variable': 'checkbox_var'}, {}, {'padx': 10, 'pady': 10, 'column': 1, 'row': 0, 
+ 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, checkbox_width = 24, c
+ heckbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky = 'E' )\n", 'maste
+ r': 'sub_frame'}]
+
+ 2024-03-26 20:24:53.116876 | actual widget's ID : checkbox
+
+ 2024-03-26 20:25:01.625499 | actual widget opened : ('checkbox', 'checkbox')
+
+ 2024-03-26 20:25:01.625499 | widget name list : ['', 'entry', 'checkbox', 'verif_label', 'label', 'action_frame', 'label_frame', 'sub_frame', 'button']
+
+ 2024-03-26 20:25:01.625499 | actual cache : [('<modify>', 'checkbox', 'checkbox', [{'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'False', 'variable': 'checkbox_var'}, {}, {'padx': 1
+ 0, 'pady': 10, 'column': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkChec
+ kBox(sub_frame, checkbox_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column =
+  1 ,row = 0 ,sticky = 'E' )\n", 'master': 'sub_frame'}], ['import customtkinter\n', '\n', 'window = customtkinter.CTk()\n', '\n', "window.title('interface')\n", '\n', '\n', 
+ '#variables\n', '\n', 'checkbox_var = None\n', '\n', '#functions\n', '\n', '\n', '#frames\n', '\n', 'label_frame = customtkinter.CTkFrame(window)\n', "label_frame.pack(fill 
+ = 'both' ,side = 'top' )\n", '\n', 'action_frame = customtkinter.CTkFrame(window)\n', "action_frame.pack(fill = 'both' ,side = 'top' )\n", '\n', 'sub_frame = customtkinter.C
+ TkFrame(window)\n', "sub_frame.pack(fill = 'both' ,side = 'top' )\n", '\n', '\n', '#widgets\n', '\n', "label = customtkinter.CTkLabel(label_frame, text = 'Ceci est un exempl
+ e :', font = customtkinter.CTkFont(family = 'Arial' ,size = 20 ,weight = 'bold' ))\n", "label.pack(padx = 10 ,pady = 10 ,side = 'left' )\n", '\n', 'entry = customtkinter.CTk
+ Entry(action_frame, width = 150, height = 30)\n', 'entry.grid(padx = 10 ,pady = 10 ,column = 0 ,row = 0 )\n', '\n', "button = customtkinter.CTkButton(action_frame, border_sp
+ acing = 2, text = 'Valider')\n", 'button.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 )\n', '\n', "verif_label = customtkinter.CTkLabel(sub_frame, text = 'ne plus afficher
+ ', font = customtkinter.CTkFont(family = 'Arial' ,size = 16 ,weight = 'bold' ))\n", "verif_label.grid(padx = 10 ,pady = 10 ,column = 0 ,row = 0 ,sticky = 'E' )\n", '\n', "ch
+ eckbox = customtkinter.CTkCheckBox(sub_frame, checkbox_width = 24, checkbox_height = 24, text = '', hover = False, variable = checkbox_var)\n", "checkbox.grid(padx = 10 ,pad
+ y = 10 ,column = 1 ,row = 0 ,sticky = 'E' )\n", '\n'], {'var_ind': 10, 'funct_ind': 13, 'frame_ind': 25})]
+
+ 2024-03-26 20:25:01.625499 | widget settings list : ({'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'True', 'onvalue': '1', 'offvalue': '0'}, {}, {'padx': 10, 'pady': 10, 'column': 1, 'row':
+  0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = customtkinter.CTkCheckBox(sub_frame, checkbox_width = 2
+ 4, checkbox_height = 24, text = '', onvalue = 1, offvalue = 0)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky = 'E' )\n", 'master': 'sub_
+ frame'})
+
+ 2024-03-26 20:25:01.625499 | actual widget opened : checkbox
+
+ 2024-03-26 20:25:13.920785 | modification saved : True
+
+ 2024-03-26 20:25:13.920785 | widget settings list's dictionnary saved : {'entry': [{'width': 150, 'height': 30, 'font': '0'}, {}, {'padx': 10, 'pady': 10, 'column': 0, 'row': 0}, {'name': 'entry', 'ID': 'entry', 'slaves': False, 'layout': 'grid', 
+ 'initcode': 'entry = customtkinter.CTkEntry(action_frame, width = 150, height = 30)\n', 'layoutcode': 'entry.grid(padx = 10 ,pady = 10 ,column = 0 ,row = 0 )\n', 'master': '
+ action_frame'}], 'verif_label': [{'width': 200, 'height': 200, 'text': 'ne plus afficher', 'font': '1'}, {'family': 'Arial', 'size': 16, 'weight': 'bold'}, {'padx': 10, 'pad
+ y': 10, 'column': 0, 'row': 0, 'sticky': 'E'}, {'name': 'verif_label', 'ID': 'label', 'slaves': False, 'layout': 'grid', 'initcode': "verif_label = customtkinter.CTkLabel(su
+ b_frame, text = 'ne plus afficher', font = customtkinter.CTkFont(family = 'Arial' ,size = 16 ,weight = 'bold' ))\n", 'layoutcode': "verif_label.grid(padx = 10 ,pady = 10 ,co
+ lumn = 0 ,row = 0 ,sticky = 'E' )\n", 'master': 'sub_frame'}], 'label': [{'width': 200, 'height': 200, 'text': 'Ceci est un exemple :', 'font': '1'}, {'family': 'Arial', 'si
+ ze': 20, 'weight': 'bold'}, {'padx': 10, 'pady': 10, 'side': 'left'}, {'name': 'label', 'ID': 'label', 'slaves': False, 'layout': 'pack', 'initcode': "label = customtkinter.
+ CTkLabel(label_frame, text = 'Ceci est un exemple :', font = customtkinter.CTkFont(family = 'Arial' ,size = 20 ,weight = 'bold' ))\n", 'layoutcode': "label.pack(padx = 10 ,p
+ ady = 10 ,side = 'left' )\n", 'master': 'label_frame'}], 'action_frame': [{'width': 200, 'height': 200}, {}, {'fill': 'both', 'side': 'top'}, {'name': 'action_frame', 'ID': 
+ 'frame', 'slaves': 2, 'layout': 'pack', 'initcode': 'action_frame = customtkinter.CTkFrame(window)\n', 'layoutcode': "action_frame.pack(fill = 'both' ,side = 'top' )\n", 'ma
+ ster': 'window'}], 'label_frame': [{'width': 200, 'height': 200}, {}, {'fill': 'both', 'side': 'top'}, {'name': 'label_frame', 'ID': 'frame', 'slaves': 2, 'layout': 'pack', 
+ 'initcode': 'label_frame = customtkinter.CTkFrame(window)\n', 'layoutcode': "label_frame.pack(fill = 'both' ,side = 'top' )\n", 'master': 'window'}], 'sub_frame': [{'width':
+  200, 'height': 200}, {}, {'fill': 'both', 'side': 'top'}, {'name': 'sub_frame', 'ID': 'frame', 'slaves': 3, 'layout': 'pack', 'initcode': 'sub_frame = customtkinter.CTkFram
+ e(window)\n', 'layoutcode': "sub_frame.pack(fill = 'both' ,side = 'top' )\n", 'master': 'window'}], 'button': [{'width': 200, 'height': 200, 'border_spacing': '2', 'text': '
+ Valider', 'font': '0', 'hover': 'True', 'command': None}, {}, {'padx': 10, 'pady': 10, 'column': 1, 'row': 0}, {'name': 'button', 'ID': 'bt', 'slaves': False, 'layout': 'gri
+ d', 'initcode': "button = customtkinter.CTkButton(action_frame, border_spacing = 2, text = 'Valider')\n", 'layoutcode': 'button.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 
+ 0 )\n', 'master': 'action_frame'}], 'checkbox': ({'checkbox_width': '24', 'checkbox_height': '24', 'text': '', 'font': '0', 'hover': 'True', 'onvalue': '1', 'offvalue': '0'}
+ , {}, {'padx': 10, 'pady': 10, 'column': 1, 'row': 0, 'sticky': 'E'}, {'name': 'checkbox', 'ID': 'checkbox', 'slaves': False, 'layout': 'grid', 'initcode': "checkbox = custo
+ mtkinter.CTkCheckBox(sub_frame, checkbox_width = 24, checkbox_height = 24, text = '', onvalue = 1, offvalue = 0)\n", 'layoutcode': "checkbox.grid(padx = 10 ,pady = 10 ,colum
+ n = 1 ,row = 0 ,sticky = 'E' )\n", 'master': 'sub_frame'})}
+
+ 2024-03-26 20:25:13.920785 | code list saved : import customtkinter
+
+window = customtkinter.CTk()
+
+window.title('interface')
+
+
+#variables
+
+
+#functions
+
+
+#frames
+
+label_frame = customtkinter.CTkFrame(window)
+label_frame.pack(fill = 'both' ,side = 'top' )
+
+action_frame = customtkinter.CTkFrame(window)
+action_frame.pack(fill = 'both' ,side = 'top' )
+
+sub_frame = customtkinter.CTkFrame(window)
+sub_frame.pack(fill = 'both' ,side = 'top' )
+
+
+#widgets
+
+label = customtkinter.CTkLabel(label_frame, text = 'Ceci est un exemple :', font = customtkinter.CTkFont(family = 'Arial' ,size = 20 ,weight = 'bold' ))
+label.pack(padx = 10 ,pady = 10 ,side = 'left' )
+
+entry = customtkinter.CTkEntry(action_frame, width = 150, height = 30)
+entry.grid(padx = 10 ,pady = 10 ,column = 0 ,row = 0 )
+
+button = customtkinter.CTkButton(action_frame, border_spacing = 2, text = 'Valider')
+button.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 )
+
+verif_label = customtkinter.CTkLabel(sub_frame, text = 'ne plus afficher', font = customtkinter.CTkFont(family = 'Arial' ,size = 16 ,weight = 'bold' ))
+verif_label.grid(padx = 10 ,pady = 10 ,column = 0 ,row = 0 ,sticky = 'E' )
+
+checkbox = customtkinter.CTkCheckBox(sub_frame, checkbox_width = 24, checkbox_height = 24, text = '', onvalue = 1, offvalue = 0)
+checkbox.grid(padx = 10 ,pady = 10 ,column = 1 ,row = 0 ,sticky = 'E' )
+
+
+
+ session closed

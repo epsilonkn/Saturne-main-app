@@ -295,13 +295,13 @@ class interface(ct.CTk):
                             entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], 
                                                  command = lambda x = parameter : self.openVariableTopLevel(x))
                             try : self.variable = AppAttr.get("widsetlist")[0]["variable"]
-                            except : self.variable = None
+                            except : self.variable = ""
 
                         elif parameter == "textvariable" :
                             entry = ct.CTkButton(self.settings_frame, text = AppAttr.get("langdict")["add_label"][self.language], 
                                                  command = lambda x = parameter : self.openVariableTopLevel(x))
                             try : self.textvariable = AppAttr.get("widsetlist")[0]["textvariable"]
-                            except : self.textvariable = None
+                            except : self.textvariable = ""
 
                         elif parameter in ["width", "height"] :
                             entry = ct.CTkEntry(self.settings_frame, width = 100,font=ct.CTkFont(weight="bold"))
@@ -963,7 +963,9 @@ class interface(ct.CTk):
     def openVariableTopLevel(self, var):
         if self.app != None :
             return
-        self.app = VariableTopLevelWin()
+        if var == "variable" : text = self.variable
+        else : text = self.textvariable
+        self.app = VariableTopLevelWin(texte = text)
         self.app.grab_set()
         if var == "variable" : self.variable = self.app.contentGet()
         else : self.textvariable = self.app.contentGet()
